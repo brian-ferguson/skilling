@@ -15,15 +15,15 @@ const Inventory = props => {
     <div className="inventory">
       <h2>Inventory: </h2>
 
-      {inventory.map(item => {
+        {inventory.map(item => {
 
-        return(
-          <div key={item.id}>
-            <Item name={item.name} source={item.source} id={item.id}/>
-          </div>
-        );
+          return(
+            <div key={item.id}>
+              <Item name={item.name} source={item.source} id={item.id}/>
+            </div>
+          );
 
-      })}
+        })}
 
     </div>
   );
