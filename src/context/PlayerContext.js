@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import InitialInventory from '../initial_inventory.json';
+import JSONTestItems from '../initial_inventory.json';
 
 //context
 export const Context = createContext({});
@@ -18,7 +18,7 @@ export const Provider = props => {
 
   useEffect(() => {
     setInventory(initialInventory);
-    setItems(InitialInventory);
+    setItems(JSONTestItems);
 
   }, [initialInventory]);
 
