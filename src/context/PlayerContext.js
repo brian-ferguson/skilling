@@ -20,7 +20,7 @@ export const Provider = props => {
     setInventory(initialInventory);
     setItems(InitialInventory);
 
-  }, []);
+  }, [initialInventory]);
 
 
   const addItem = (item) => {
