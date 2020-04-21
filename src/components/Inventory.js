@@ -15,10 +15,10 @@ const Inventory = props => {
     <div className="inventory">
       <h2>Inventory: </h2>
 
-        {inventory.map(item => {
+        {inventory.map((item, index) => {
 
           return(
-            <div key={item.id}>
+            <div key={index}>
               <Item name={item.name} source={item.source} id={item.id}/>
             </div>
           );
