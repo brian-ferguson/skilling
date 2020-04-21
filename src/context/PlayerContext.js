@@ -23,9 +23,14 @@ export const Provider = props => {
   }, []);
 
 
+  const addItem = (item) => {
+    setInventory(inventory.concat(item))
+  };
+
   const playerContext = {
     inventory,
     setInventory,
+    addItem,
   };
 
   return <Context.Provider value={playerContext}>{children}</Context.Provider>;

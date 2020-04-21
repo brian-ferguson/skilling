@@ -12,13 +12,7 @@ var snek = {
 };
 
 function App() {
-
-  const handleDrop = e => {
-    console.log(e);
-  };
-
-
-
+  
   return (
     <div className="App">
 
@@ -27,7 +21,7 @@ function App() {
 
         <h4>Area:</h4>
 
-        <Area name="Nest" source='/imgs/sneknest.png' dropClicks={10} drop={snek} controlFunc={handleDrop}/>
+        <Area name="Nest" source='/imgs/sneknest.png' dropClicks={10} drop={snek} id="d57d89e2-c088-4726-bcfe-e1af37d80f3c"/>
       </PlayerContextProvider>
 
 

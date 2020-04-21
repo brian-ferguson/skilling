@@ -1,24 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import  React, {useContext, useState} from "react";
+import {PlayerContext} from "../context";
 
-const Area = (props) => (
-	<div className="form-group" onClick={props.controlFunc}>
-    <div style={{display: 'flex', flexDirection: 'column', paddingTop: 18, margin: '0px auto', alignItems: 'center'}}>
-      <img
-        src={process.env.PUBLIC_URL + props.source}
-        alt=""
-        style={{ width: 24, height: 24, paddingBottom: 5 }}
-      />
-    </div>
-	</div>
-);
+const Area = (props) => {
 
-Area.propTypes = {
-	name: PropTypes.string.isRequired,
-  source: PropTypes.string.isRequired,
-  dropClicks: PropTypes.number.isRequired,
-  drop: PropTypes.object.isRequired,
-  controlFunc: PropTypes.func.isRequired,
+	const playerContext = useContext(PlayerContext);
+  const {inventory, addItem} = playerContext;
+
+
+	const handleRefresh = e => {
+    var item_drop = props.drop;
+		addItem(item_drop);
+  }
+
+  return(
+		<div style={{display: 'flex', flexDirection: 'column', paddingTop: 18, margin: '0px auto', alignItems: 'center'}}>
+		    <img
+					id={props.id}
+					onClick={handleRefresh}
+		      src={process.env.PUBLIC_URL + props.source}
+		      alt=""
+		      style={{ width: 24, height: 24, paddingBottom: 5 }}
+		    />
+		  </div>
+  );
+
 };
 
 export default Area;
