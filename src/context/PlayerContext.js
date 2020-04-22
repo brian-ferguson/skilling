@@ -1,31 +1,16 @@
 import React, {createContext, useState} from "react";
 import PropTypes from "prop-types";
-// import JSONTestItems from '../initial_inventory.json';
 
 //context
 export const Context = createContext({});
 
 //provider
 export const Provider = props => {
-	const {
-		// items: initialItems,
-		// inventory: initialInventory,
-		children
-	} = props;
+	const { children } = props;
 
 	const [inventory, setInventory] = useState([]);
-	// const [items, setItems] = useState([]);
-
-	// useEffect(() => {
-	// 	setInventory(initialInventory);
-	// 	setItems(JSONTestItems);
-	// }, [initialInventory]);
-
 
 	const addItem = (item) => {
-
-		console.log(item.id);
-
 		if(item.stacks){
 			//if stacks is true, and the item is already in the inventory > increment the item quantity
 			if(inventory.filter(e => e.id === item.id).length > 0){
