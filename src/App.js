@@ -2,6 +2,7 @@ import React from 'react';
 import {PlayerContextProvider} from "./context";
 import Activity from "./components/Activity";
 import Inventory from "./components/Inventory";
+import items from './items.json';
 
 var snek = {
 	"name": "Snake",
