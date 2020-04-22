@@ -2,7 +2,6 @@ import React from 'react';
 import {PlayerContextProvider} from "./context";
 import Activity from "./components/Activity";
 import Inventory from "./components/Inventory";
-import items from './items.json';
 
 var snek = {
 	"name": "Snake",
@@ -23,8 +22,8 @@ var frog = {
 const App = () => {
 	return <PlayerContextProvider>
 		<div className="App" style={{display: 'flex', flexDirection: 'column'}}>
-			<Activity name="SnekNest" source='/imgs/sneknest.png' dropClicks={10} drop={snek} id="d57d89e2-c088-4726-bcfe-e1af37d80f3c" />
-    		<Activity name="FrogNest" source='/imgs/sneknest.png' dropClicks={10} drop={frog} id="d6a58a3d-957e-493b-a7ba-8aca50668e57" />
+			<Activity name="SnekNest" source='/imgs/sneknest.png' dropClicks={10} drop={snek} id={snek.id} />
+    		<Activity name="FrogNest" source='/imgs/sneknest.png' dropClicks={10} drop={frog} id={frog.id} />
 			<Inventory />
 		</div>
 	</PlayerContextProvider>
