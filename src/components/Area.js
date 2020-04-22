@@ -1,11 +1,11 @@
-import  React, {useContext, useState} from "react";
+import  React, { useContext } from "react";
 import {PlayerContext} from "../context";
 
 const Area = (props) => {
-
 	const playerContext = useContext(PlayerContext);
-  const {inventory, addItem} = playerContext;
 
+	const { addItem } = playerContext;
+	// const { inventory, addItem } = playerContext;
 
 	const handleRefresh = e => {
 		var item_drop = props.drop;

@@ -22,18 +22,17 @@ export const Provider = props => {
 
   }, [initialInventory]);
 
+	const addItem = (item) => {
+		setInventory(inventory.concat(item))
+	};
 
-  const addItem = (item) => {
-    setInventory(inventory.concat(item))
-  };
+	const playerContext = {
+		inventory,
+		setInventory,
+		addItem,
+	};
 
-  const playerContext = {
-    inventory,
-    setInventory,
-    addItem,
-  };
-
-  return <Context.Provider value={playerContext}>{children}</Context.Provider>;
+	return <Context.Provider value={playerContext}>{children}</Context.Provider>
 
 };
 
