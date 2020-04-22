@@ -16,7 +16,7 @@ const Inventory = props => {
 		<div style={{display: 'flex', flexWrap: 'wrap'}}>
 			{inventory.map((item, index) => {
 				return <div key={index} style={{border: '1px solid black', width: 40, margin: '5px 0 0 5px', height: 40}}>
-					<Item name={item.name} source={item.source} id={item.id}/>
+					<Item name={item.name} source={item.source} id={item.id} stacks={item.stacks} quantity={item.quantity}/>
 				</div>
 
 			})}

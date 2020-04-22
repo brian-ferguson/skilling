@@ -8,7 +8,7 @@ const Item = (props) => {
 			alt=""
 			style={{ width: 24, height: 24 }}
 		/>
-		<span>1</span>
+		<span>{props.quantity}</span>
 	</div>
 }
 
@@ -16,6 +16,8 @@ Item.propTypes = {
 	name: PropTypes.string.isRequired,
 	source: PropTypes.string.isRequired,
 	id: PropTypes.string.isRequired,
+	stacks: PropTypes.bool.isRequired,
+	quantity: PropTypes.number.isRequired,
 };
 
 export default Item;
