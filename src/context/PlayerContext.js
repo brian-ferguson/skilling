@@ -1,26 +1,26 @@
-import React, {createContext, useState, useEffect} from "react";
+import React, {createContext, useState} from "react";
 import PropTypes from "prop-types";
-import JSONTestItems from '../initial_inventory.json';
+// import JSONTestItems from '../initial_inventory.json';
 
 //context
 export const Context = createContext({});
 
 //provider
 export const Provider = props => {
-  const {
-    items: initialItems,
-    inventory: initialInventory,
-    children
-  } = props;
+	const {
+		// items: initialItems,
+		// inventory: initialInventory,
+		children
+	} = props;
 
-  const [inventory, setInventory] = useState(initialInventory);
-  const [items, setItems] = useState(initialItems);
+	const [inventory, setInventory] = useState([]);
+	// const [items, setItems] = useState([]);
 
-  useEffect(() => {
-    setInventory(initialInventory);
-    setItems(JSONTestItems);
+	// useEffect(() => {
+	// 	setInventory(initialInventory);
+	// 	setItems(JSONTestItems);
+	// }, [initialInventory]);
 
-  }, [initialInventory]);
 
 	const addItem = (item) => {
 		setInventory(inventory.concat(item))
