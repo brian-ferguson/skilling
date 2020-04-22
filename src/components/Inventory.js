@@ -5,32 +5,23 @@ import {PlayerContext} from "../context";
 import Item from "../components/Item";
 
 const Inventory = props => {
+	const playerContext = useContext(PlayerContext);
+	const {inventory} = playerContext;
 
-  const playerContext = useContext(PlayerContext);
-  const {inventory} = playerContext;
+  return <div className="inventory" style={{border: '1px solid red', width: 300, height: 300, margin: 0}}>
+		{/* Title */}
+    	<h2 style={{textAlign: 'center'}}>Inventory</h2>
 
+		{/* Item Container */}
+		<div style={{display: 'flex', flexWrap: 'wrap'}}>
+			{inventory.map((item, index) => {
+				return <div key={index} style={{border: '1px solid black', width: 40, margin: '5px 0 0 5px', height: 40}}>
+					<Item name={item.name} source={item.source} id={item.id}/>
+				</div>
 
-
-  return(
-    <div className="inventory">
-      <h2>Inventory: </h2>
-
-        {inventory.map((item, index) => {
-
-          return(
-            <div key={index}>
-              <Item name={item.name} source={item.source} id={item.id}/>
-            </div>
-          );
-
-        })}
-
+			})}
+		</div>
     </div>
-  );
-
-
-
-
 };
 
 export default Inventory;
