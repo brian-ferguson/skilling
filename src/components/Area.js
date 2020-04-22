@@ -8,9 +8,8 @@ const Area = (props) => {
 
 
 	const handleRefresh = e => {
-    var item_drop = props.drop;
+		var item_drop = props.drop;
 		addItem(item_drop);
-  }
 
   return(
 		<div style={{display: 'flex', flexDirection: 'column', paddingTop: 18, margin: '0px auto', alignItems: 'center'}}>
