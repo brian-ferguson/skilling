@@ -35,7 +35,7 @@ export const Provider = props => {
 				//get the index of the item to be incremented
 				const index = inventory.map(i => i.id).indexOf(item.id);
 
-				var new_inventory = inventory;
+				var new_inventory =  [...inventory];
 				new_inventory[index].quantity = current_quantity + 1;
 
 				setInventory(new_inventory);
