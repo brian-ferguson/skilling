@@ -11,24 +11,13 @@ var snek = {
   "source": "/imgs/snek.svg"
 };
 
-function App() {
-  
-  return (
-    <div className="App">
-
-      <PlayerContextProvider>
-        <Inventory/>
-
-        <h4>Area:</h4>
-
-        <Area name="Nest" source='/imgs/sneknest.png' dropClicks={10} drop={snek} id="d57d89e2-c088-4726-bcfe-e1af37d80f3c"/>
-      </PlayerContextProvider>
-
-
-
-
-    </div>
-  );
+const App = () => {
+	return <PlayerContextProvider>
+		<div className="App" style={{display: 'flex', flexDirection: 'column'}}>
+			<Area name="Nest" source='/imgs/sneknest.png' dropClicks={10} drop={snek} id="d57d89e2-c088-4726-bcfe-e1af37d80f3c" />
+			<Inventory />
+		</div>
+	</PlayerContextProvider>
 }
 
 export default App;
