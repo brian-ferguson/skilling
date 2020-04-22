@@ -1,7 +1,7 @@
 import  React, { useContext } from "react";
 import {PlayerContext} from "../context";
 
-const Area = (props) => {
+const Activity = (props) => {
 	const playerContext = useContext(PlayerContext);
 
 	const { addItem } = playerContext;
@@ -12,10 +12,7 @@ const Area = (props) => {
 		addItem(item_drop);
 	}
 
-	return <div style={{margin: 0, border: '1px solid green', width: 300}}>
-		{/* Title */}
-		<h2 style={{textAlign: 'center'}}>Area</h2>
-
+	return <div style={{border: '1px solid black', width: 40, margin: '5px 0 0 5px', height: 40}}>
 		{/* Image */}
 		<img
 			id={props.id}
@@ -27,4 +24,4 @@ const Area = (props) => {
 	</div>
 };
 
-export default Area;
+export default Activity;
