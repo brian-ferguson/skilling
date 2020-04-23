@@ -9,6 +9,7 @@ export const Provider = props => {
 	const { children } = props;
 
 	const [inventory, setInventory] = useState([]);
+	const [view, setView] = useState('Calm Beach')
 
 	const addItem = (item) => {
 		if(item.stacks){
@@ -41,6 +42,8 @@ export const Provider = props => {
 		inventory,
 		setInventory,
 		addItem,
+		view,
+		setView
 	};
 
 	return <Context.Provider value={playerContext}>{children}</Context.Provider>

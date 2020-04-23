@@ -15,7 +15,7 @@ const Item = (props) => {
 Item.propTypes = {
 	name: PropTypes.string.isRequired,
 	source: PropTypes.string.isRequired,
-	id: PropTypes.string.isRequired,
+	id: PropTypes.number.isRequired,
 	stacks: PropTypes.bool.isRequired,
 	quantity: PropTypes.number.isRequired,
 };

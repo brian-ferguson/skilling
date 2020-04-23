@@ -1,14 +1,14 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 //import clsx from "clsx";
 
-import {PlayerContext} from "../context";
+import { PlayerContext } from "../context";
 import Item from "../components/Item";
 
 const Inventory = props => {
 	const playerContext = useContext(PlayerContext);
-	const {inventory} = playerContext;
+	const { inventory } = playerContext;
 
-  return <div className="inventory" style={{border: '1px solid red', width: 300, height: 300, margin: 0}}>
+  return <div className="inventory" style={{borderLeft: '1px solid black', width: 300, margin: 0}}>
 		{/* Title */}
     	<h2 style={{textAlign: 'center'}}>Inventory</h2>
 

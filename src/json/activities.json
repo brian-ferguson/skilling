@@ -1,0 +1,16 @@
+{
+    "Snake": {
+        "name": "Snake",
+        "id": 1,
+        "source": "/imgs/snek.svg",
+        "stacks": true,
+        "quantity": 1
+    },
+    "Frog": {
+        "name": "Frog",
+        "id": 2,
+        "source": "/imgs/frog.svg",
+        "stacks": true,
+        "quantity": 1
+    }
+}
