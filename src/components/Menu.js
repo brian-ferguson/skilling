@@ -4,7 +4,6 @@ import Stats from './Stats'
 
 const nav_styles = {
     textAlign: 'center', 
-    background: '#F8F8F8', 
     width: '100%',
     height: 30, paddingTop: 10,
     border: '1px solid black',
@@ -26,8 +25,8 @@ const Menu = () => {
     return <div>
         {/* Menu */}
     	<div style={{display: 'flex'}}>
-            <div onClick={handleMenuChange} style={nav_styles}>Inventory</div>
-            <div onClick={handleMenuChange} style={nav_styles}>Stats</div>
+            <div onClick={handleMenuChange} style={{...nav_styles, background: menu === "Inventory" ? 'Gainsboro' : '#F2F2F2'}}>Inventory</div>
+            <div onClick={handleMenuChange} style={{...nav_styles, background: menu === "Stats" ? 'Gainsboro' : '#F2F2F2'}}>Stats</div>
         </div>
 
         {menu === "Inventory"

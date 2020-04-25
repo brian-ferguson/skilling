@@ -9,9 +9,8 @@
     "Chop": {
         "name": "Chop",
         "id": 2,
-        "requirement": {1},
+        "requirement": {},
         "stacks": true,
         "quantity": 1
     }
-
 }

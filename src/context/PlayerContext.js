@@ -11,8 +11,9 @@ export const Context = createContext({});
 export const Provider = props => {
 	const { children } = props;
 
-	const [inventory, setInventory] = useState([]);
 	const [view, setView] = useState('Calm Beach')
+	const [inventory, setInventory] = useState([]);
+	const [stats, setStats] = useState([])
 	const [locationActivities, setLocationActivities] = useState([]);
 
 	useEffect(() => {
@@ -31,44 +32,66 @@ export const Provider = props => {
 		}
 	}, [view])
 
-	const addItem = (activity) => {
+	const levelFormula = exp => {
+		return Math.floor(Math.sqrt(exp) * 1.2);
+	};
+
+	const doActivity = (activity) => {
 
 		//get the item with the corresponding id
 		let currentDrop = items_json[activity];
+		console.log(inventory)
 
-		if(currentDrop.stacks){
-			//if stacks is true, and the item is already in the inventory > increment the item quantity
-			if(inventory.filter(e => e.id === currentDrop.id).length > 0){
+		if(currentDrop) {
+			//if we already have that experience type, add experience to it
+			if (stats.filter(e => e.name === currentDrop.experienceType).length > 0) {
+				let current_experience = stats[stats.map(i => i.name).indexOf(currentDrop.experienceType)].experience
+				let stat_index = stats.map(i => i.name).indexOf(currentDrop.experienceType)
+				let new_stats = [...stats]
+				new_stats[stat_index].experience = current_experience + currentDrop.experience
+				new_stats[stat_index].level = levelFormula(new_stats[stat_index].experience)
+				setStats(new_stats)
+			} else {
+				let newStat = { name: currentDrop.experienceType, experience: currentDrop.experience, level: 1 }
+				setStats(stats.concat(newStat))
+			}
+		}
 
-				//get the quantity of the item in the players Inventory
-				var current_quantity = inventory[inventory.map(i => i.id).indexOf(currentDrop.id)].quantity;
-				//get the index of the item to be incremented
-				const index = inventory.map(i => i.id).indexOf(currentDrop.id);
+		if(currentDrop){
+			if(currentDrop.stacks){
+				//if stacks is true, and the item is already in the inventory > increment the item quantity
+				if(inventory.filter(e => e.id === currentDrop.id).length > 0){
 
-				var new_inventory =  [...inventory];
-				new_inventory[index].quantity = current_quantity + 1;
+					//get the quantity of the item in the players Inventory
+					let current_quantity = inventory[inventory.map(i => i.id).indexOf(currentDrop.id)].quantity;
+					//get the index of the item to be incremented
+					const index = inventory.map(i => i.id).indexOf(currentDrop.id);
 
-				setInventory(new_inventory);
+					let new_inventory =  [...inventory];
+					new_inventory[index].quantity = current_quantity + 1;
+
+					setInventory(new_inventory);
 
 
-			//if stacks is true, and the item is not in the inventory > add the item to the inventory
+				//if stacks is true, and the item is not in the inventory > add the item to the inventory
+				}else{
+					setInventory(inventory.concat(currentDrop))
+				}
+
+			//if stacks is false, add the item to the players inventory
 			}else{
 				setInventory(inventory.concat(currentDrop))
 			}
-
-		//if stacks is false, add the item to the players inventory
-		}else{
-			setInventory(inventory.concat(currentDrop))
 		}
-
 	};
 
 	const playerContext = {
 		inventory,
 		setInventory,
-		addItem,
+		doActivity,
 		view,
 		setView,
+		stats,
 		locationActivities,
 		setLocationActivities,
 	};
