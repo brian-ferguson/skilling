@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Item = (props) => {
-	return <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+	return <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', userSelect: 'none'}}>
 		<img
 			src={process.env.PUBLIC_URL + props.source}
 			alt=""

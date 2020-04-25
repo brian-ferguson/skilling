@@ -10,7 +10,7 @@ const Activity = (props) => {
 		doActivity(e.target.id)
 	}
 
-	return <div onClick={handleActivity} style={{border: '1px solid black', width: 60, margin: '5px 0 0 5px', height: 60, cursor: 'pointer'}}>
+	return <div onClick={handleActivity} style={{border: '1px solid black', width: 60, margin: '5px 0 0 5px', height: 60, cursor: 'pointer', userSelect: 'none'}}>
 		{/* Image */}
 		<img
 			id={props.id}
