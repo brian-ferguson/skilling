@@ -1,14 +1,10 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { PlayerContext } from "../context";
 import Activity from '../components/Activity';
 
 const View = () => {
     const playerContext = useContext(PlayerContext);
-    const { view, createLocation, locationActivities} = playerContext
-
-    useEffect(() => {
-        createLocation(view);
-      }, [view]);
+    const { locationActivities } = playerContext
 
     return (<div style={{flexGrow: 2, background: '#C0FFEE'}}>
         {locationActivities.map((e, i) => <div key={i}>

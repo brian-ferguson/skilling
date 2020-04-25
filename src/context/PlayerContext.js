@@ -19,9 +19,7 @@ export const Provider = props => {
 	const [locationActivities, setLocationActivities] = useState([]);
 
 
-	const createLocation = (location) => {
-
-		//get the activites of the current location
+	useEffect(() => {
 		let currentLocations = Object.keys(locations[view])
 
 		let currentLocationActivities = [];
@@ -35,6 +33,7 @@ export const Provider = props => {
 		if(currentLocationActivities){
 			setLocationActivities(currentLocationActivities);
 		}
+	}, [activities, locations, view])
 
 	};
 
@@ -81,7 +80,6 @@ export const Provider = props => {
 		setActivities,
 		locations,
 		setLocations,
-		createLocation,
 		locationActivities,
 		setLocationActivities,
 	};
