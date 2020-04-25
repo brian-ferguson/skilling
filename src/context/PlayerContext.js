@@ -1,4 +1,4 @@
-import React, {createContext, useState} from "react";
+import React, { useState, useEffect, createContext } from "react";
 import PropTypes from "prop-types";
 import locations_json from '../json/locations.json'
 import activities_json from '../json/activities.json'
@@ -12,12 +12,11 @@ export const Provider = props => {
 	const { children } = props;
 
 	const [inventory, setInventory] = useState([]);
-	const [items, setItems] = useState(items_json);
 	const [view, setView] = useState('Calm Beach')
 	const [activities, setActivities] = useState(activities_json);
 	const [locations, setLocations] = useState(locations_json);
 	const [locationActivities, setLocationActivities] = useState([]);
-
+	const items = items_json
 
 	useEffect(() => {
 		let currentLocations = Object.keys(locations[view])
