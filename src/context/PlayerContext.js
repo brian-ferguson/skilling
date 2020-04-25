@@ -27,19 +27,14 @@ export const Provider = props => {
 		let currentLocationActivities = [];
 
 		//get all the activities of the current location
-		currentLocations.map((loc, index) => {
-
-			//get the activity at the current index
-			let currentActivity = activities[loc];
-			//console.log(currentActivity);
-			currentLocationActivities.push(currentActivity);
-		})
+		for (let i = 0; i < currentLocations.length; i++) {
+			let currentActivity = activities[currentLocations[i]]
+			currentLocationActivities.push(currentActivity)
+		}
 
 		if(currentLocationActivities){
 			setLocationActivities(currentLocationActivities);
 		}
-
-		console.log("current: ", currentLocationActivities);
 
 	};
 
