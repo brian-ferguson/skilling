@@ -16,7 +16,7 @@ export const Provider = props => {
 	const [activities, setActivities] = useState(activities_json);
 	const [locations, setLocations] = useState(locations_json);
 	const [locationActivities, setLocationActivities] = useState([]);
-	const items = items_json
+	const [items, setItems] = useState(items_json);
 
 	useEffect(() => {
 		let currentLocations = Object.keys(locations[view])
