@@ -4,10 +4,10 @@ import { PlayerContext } from "../context";
 const Activity = (props) => {
 	const playerContext = useContext(PlayerContext);
 
-	const { addItem } = playerContext;
+	const { doActivity } = playerContext;
 
 	const handleActivity = e => {
-		addItem(e.target.id)
+		doActivity(e.target.id)
 	}
 
 	return <div onClick={handleActivity} style={{border: '1px solid black', width: 60, margin: '5px 0 0 5px', height: 60, cursor: 'pointer'}}>
