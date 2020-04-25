@@ -35,13 +35,10 @@ export const Provider = props => {
 		}
 	}, [activities, locations, view])
 
-	};
-
-
-	const addItem = (item) => {
+	const addItem = (activity) => {
 
 		//get the item with the corresponding id
-		let currentDrop = items[item];
+		let currentDrop = items[activity];
 
 		if(currentDrop.stacks){
 			//if stacks is true, and the item is already in the inventory > increment the item quantity
