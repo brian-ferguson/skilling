@@ -13,31 +13,28 @@ export const Provider = props => {
 
 	const [inventory, setInventory] = useState([]);
 	const [view, setView] = useState('Calm Beach')
-	const [activities, setActivities] = useState(activities_json);
-	const [locations, setLocations] = useState(locations_json);
 	const [locationActivities, setLocationActivities] = useState([]);
-	const items = items_json
 
 	useEffect(() => {
-		let currentLocations = Object.keys(locations[view])
+		let currentLocations = Object.keys(locations_json[view])
 
 		let currentLocationActivities = [];
 
 		//get all the activities of the current location
 		for (let i = 0; i < currentLocations.length; i++) {
-			let currentActivity = activities[currentLocations[i]]
+			let currentActivity = activities_json[currentLocations[i]]
 			currentLocationActivities.push(currentActivity)
 		}
 
 		if(currentLocationActivities){
 			setLocationActivities(currentLocationActivities);
 		}
-	}, [activities, locations, view])
+	}, [view])
 
 	const addItem = (activity) => {
 
 		//get the item with the corresponding id
-		let currentDrop = items[activity];
+		let currentDrop = items_json[activity];
 
 		if(currentDrop.stacks){
 			//if stacks is true, and the item is already in the inventory > increment the item quantity
@@ -72,10 +69,6 @@ export const Provider = props => {
 		addItem,
 		view,
 		setView,
-		activities,
-		setActivities,
-		locations,
-		setLocations,
 		locationActivities,
 		setLocationActivities,
 	};
