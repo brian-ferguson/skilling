@@ -1,10 +1,11 @@
+
 {
-    "Calm Beach": {
-        "Palm Tree": {},
-        "Shallow Water": {}
-    },
-    "Varoko Village": {
-        "Blacksmith": {},
-        "Lumber Mill": {}
-    }
+  "Calm Beach": {
+      "1": {},
+      "2": {}
+  },
+  "Varoko Village": {
+      "3": {},
+      "4": {}
+  }
 }

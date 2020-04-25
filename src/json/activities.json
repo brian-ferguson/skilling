@@ -1,16 +1,34 @@
 {
-    "Snake": {
-        "name": "Snake",
+    "1": {
+        "name": "Palm Tree",
         "id": 1,
-        "source": "/imgs/snek.svg",
-        "stacks": true,
-        "quantity": 1
+        "source": "/imgs/palmtree.svg",
+        "actions": [1,2],
+        "drop": 1
+
     },
-    "Frog": {
-        "name": "Frog",
+    "2": {
+        "name": "Shallow Water",
         "id": 2,
-        "source": "/imgs/frog.svg",
-        "stacks": true,
-        "quantity": 1
+        "source": "/imgs/shallowwater.svg",
+        "actions": [1,2],
+        "drop": 2
+    },
+
+    "3": {
+        "name": "Rainforest",
+        "id": 3,
+        "source": "/imgs/rainforest.svg",
+        "actions": [1,2],
+        "drop": 3
+
+    },
+    "4": {
+        "name": "Hut",
+        "id": 4,
+        "source": "/imgs/hut.svg",
+        "actions": [1,2],
+        "drop": 4
     }
+
 }
