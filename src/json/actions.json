@@ -1,0 +1,17 @@
+{
+    "Punch": {
+        "name": "Punch",
+        "id": 1,
+        "item requirement": {},
+        "stacks": true,
+        "quantity": 1
+    },
+    "Chop": {
+        "name": "Chop",
+        "id": 2,
+        "requirement": {1},
+        "stacks": true,
+        "quantity": 1
+    }
+
+}

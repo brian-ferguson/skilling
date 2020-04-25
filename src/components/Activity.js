@@ -8,8 +8,9 @@ const Activity = (props) => {
 	// const { inventory, addItem } = playerContext;
 
 	const handleRefresh = e => {
-		var item_drop = props.drop;
-		addItem(item_drop);
+
+		//var item_drop = props.drop;
+		addItem(e.target.id);
 	}
 
 	return <div style={{border: '1px solid black', width: 40, margin: '5px 0 0 5px', height: 40}}>

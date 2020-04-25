@@ -1,18 +1,21 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { PlayerContext } from "../context";
-import locations from '../json/locations.json'
+import Activity from '../components/Activity';
 
 const View = () => {
     const playerContext = useContext(PlayerContext);
-    const { view } = playerContext
+    const { view, activities, setActivities, locations, createLocation, locationActivities} = playerContext
 
-    let currentLocations = Object.keys(locations[view])
+    useEffect(() => {
 
-    return <div style={{flexGrow: 2, background: '#C0FFEE'}}>
-        {currentLocations.map((e, i) => <div key={i}>
-            <p>{e}</p>
+        createLocation(view);
+      }, [view]);
+
+    return (<div style={{flexGrow: 2, background: '#C0FFEE'}}>
+    {locationActivities.map((e, i) => <div key={i}>
+            <Activity name={e.name} source={e.source} dropClicks={10} drop={e.drop} id={e.id}/>
         </div>)}
-    </div>
+    </div>)
 }
 
 export default View
