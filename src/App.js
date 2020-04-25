@@ -1,6 +1,6 @@
 import React from 'react';
 import { PlayerContextProvider } from "./context";
-import Inventory from "./components/Inventory";
+import Menu from "./components/Menu";
 import Sidebar from './components/Sidebar.js';
 import View from './components/View.js';
 import './main.css';
@@ -10,7 +10,7 @@ const App = () => {
 		<PlayerContextProvider>
 			<Sidebar />
 			<View />
-			<Inventory />
+			<Menu />
 		</PlayerContextProvider>
 	</div>
 }

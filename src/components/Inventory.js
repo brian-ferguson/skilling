@@ -8,10 +8,7 @@ const Inventory = props => {
 	const playerContext = useContext(PlayerContext);
 	const { inventory } = playerContext;
 
-  return <div className="inventory" style={{borderLeft: '1px solid black', width: 300, margin: 0}}>
-		{/* Title */}
-    	<h2 style={{textAlign: 'center'}}>Inventory</h2>
-
+  return <div className="inventory" style={{width: 300, margin: 0}}>
 		{/* Item Container */}
 		<div style={{display: 'flex', flexWrap: 'wrap'}}>
 			{inventory.map((item, index) => {

@@ -1,7 +1,5 @@
-import React, {createContext, useState, useEffect} from "react";
+import React, {createContext, useState} from "react";
 import PropTypes from "prop-types";
-import Activity from '../components/Activity';
-
 import locations_json from '../json/locations.json'
 import activities_json from '../json/activities.json'
 import items_json from '../json/items.json'
@@ -50,7 +48,6 @@ export const Provider = props => {
 
 		//get the item with the corresponding id
 		let currentDrop = items[item];
-		console.log(currentDrop);
 
 		if(currentDrop.stacks){
 			//if stacks is true, and the item is already in the inventory > increment the item quantity
