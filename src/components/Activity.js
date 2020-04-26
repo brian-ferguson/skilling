@@ -55,7 +55,7 @@ const Activity = (props) => {
 		<div style={{display: 'flex', width: '100%', justifyContent: 'space-evenly'}}>
 
 			{/* Button */}
-			<button id={props.id} onClick={handleActivity} style={button_styles}>Collect</button>
+			<button id={props.id} onClick={handleActivity} style={button_styles}>{props.type}</button>
 		</div>
 	</div>
 };
