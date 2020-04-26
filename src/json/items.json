@@ -40,5 +40,85 @@
         "experience": 1,
         "type": "Refine",
         "requirement": "Palm Logs"
+    },
+    "5": {
+        "name": "Coconut",
+        "id": 5,
+        "source": "/imgs/coconut.svg",
+        "stacks": true,
+        "quantity": 1,
+        "experienceType": "Woodcutting",
+        "experience": 1,
+        "type": "Collect"
+    },
+    "6": {
+        "name": "Branch",
+        "id": 6,
+        "source": "/imgs/branch.svg",
+        "stacks": true,
+        "quantity": 1,
+        "experienceType": "Woodcutting",
+        "experience": 1,
+        "type": "Collect"
+    },
+    "7": {
+        "name": "Rock",
+        "id": 7,
+        "source": "/imgs/rock.svg",
+        "stacks": true,
+        "quantity": 1,
+        "experienceType": "Woodcutting",
+        "experience": 1,
+        "type": "Collect"
+    },
+    "8": {
+        "name": "Shell",
+        "id": 8,
+        "source": "/imgs/shell.svg",
+        "stacks": true,
+        "quantity": 1,
+        "experienceType": "Woodcutting",
+        "experience": 1,
+        "type": "Collect"
+    },
+    "9": {
+        "name": "Key",
+        "id": 9,
+        "source": "/imgs/key.svg",
+        "stacks": true,
+        "quantity": 1,
+        "experienceType": "Woodcutting",
+        "experience": 1,
+        "type": "Collect"
+    },
+    "10": {
+        "name": "Egg",
+        "id": 10,
+        "source": "/imgs/egg.svg",
+        "stacks": true,
+        "quantity": 1,
+        "experienceType": "Woodcutting",
+        "experience": 1,
+        "type": "Collect"
+    },
+    "11": {
+        "name": "Flint",
+        "id": 11,
+        "source": "/imgs/flint.svg",
+        "stacks": true,
+        "quantity": 1,
+        "experienceType": "Woodcutting",
+        "experience": 1,
+        "type": "Collect"
+    },
+    "12": {
+        "name": "Palm Leaf",
+        "id": 12,
+        "source": "/imgs/palmleaf.svg",
+        "stacks": true,
+        "quantity": 1,
+        "experienceType": "Woodcutting",
+        "experience": 1,
+        "type": "Collect"
     }
 }

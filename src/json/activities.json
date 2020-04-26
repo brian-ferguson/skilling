@@ -7,7 +7,7 @@
             1,
             2
         ],
-        "drop": 1,
+        "drop": [{"item": 12, "weight": 30},{"item": 6, "weight": 10},{"item": 5, "weight": 5},{"item": 10, "weight": 1}],
         "type": "Collect"
     },
     "2": {
@@ -18,7 +18,7 @@
             1,
             2
         ],
-        "drop": 2,
+        "drop": [{"item": 8, "weight": 30},{"item": 7, "weight": 15},{"item": 11, "weight": 5},{"item": 9, "weight": 1}],
         "type": "Collect"
     },
     "3": {

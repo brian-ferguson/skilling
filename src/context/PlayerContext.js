@@ -35,7 +35,36 @@ export const Provider = props => {
 	};
 
 	const doActivity = (activity) => {
-		let currentDrop = items_json[activity];
+
+		let loot = null;
+
+				for (var key in activities_json) {
+				  if (activities_json.hasOwnProperty(key)) {
+				    if(activities_json[key].id == activity){
+							loot = activities_json[key].drop;
+						}
+				  }
+				}
+
+
+
+				let weightSum = loot.reduce((a, b) => a + (b['weight'] || 0), 0);
+				let random = Math.floor(Math.random() * (weightSum - 0 + 1) + 0);
+
+
+				let weight = 0;
+				let currentDrop = 0;
+
+				for(let i = 0; i < loot.length; i++) {
+					weight += loot[i].weight;
+
+					if(random <= weight){
+						currentDrop = loot[i].item;
+						break;
+					}
+				}
+
+				console.log(currentDrop);
 
 		const updateStats = (arr, setter) => {
 			if (arr.filter(e => e.name === currentDrop.experienceType).length > 0) {
@@ -65,9 +94,9 @@ export const Provider = props => {
 				}
 			}else{
 				setInventory(inventory.concat(currentDrop))
-			}	
+			}
 		}
-		
+
 		const refineResource = () => {
 			if(inventory.filter(e => e.name === currentDrop.requirement)[0]) {
 				updateStats(stats, setStats)
@@ -108,7 +137,7 @@ export const Provider = props => {
 			} else if (currentDrop.type === 'Refine' || 'Cook') {
 				refineResource()
 			}
-		} 
+		}
 	};
 
 	const playerContext = {
