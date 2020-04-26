@@ -9,8 +9,6 @@ export const Context = createContext({});
 
 //provider
 export const Provider = props => {
-	const { children } = props;
-
 	const [view, setView] = useState('Calm Beach')
 	const [inventory, setInventory] = useState([]);
 	const [stats, setStats] = useState([])
@@ -40,7 +38,6 @@ export const Provider = props => {
 
 		//get the item with the corresponding id
 		let currentDrop = items_json[activity];
-		console.log(inventory)
 
 		if(currentDrop) {
 			//if we already have that experience type, add experience to it
@@ -96,12 +93,12 @@ export const Provider = props => {
 		setLocationActivities,
 	};
 
-	return <Context.Provider value={playerContext}>{children}</Context.Provider>
+	return <Context.Provider value={playerContext}>{props.children}</Context.Provider>
 
 };
 
 //consumer
-export const {Consumer} = Context;
+export const { Consumer } = Context;
 
 //proptype validation
 Provider.propTypes = {
