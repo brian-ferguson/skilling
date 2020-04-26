@@ -6,7 +6,8 @@
         "stacks": true,
         "quantity": 1,
         "experienceType": "Woodcutting",
-        "experience": 1
+        "experience": 1,
+        "type": "Collect"
     },
     "2": {
         "name": "Pickaxe",
@@ -15,7 +16,8 @@
         "stacks": true,
         "quantity": 1,
         "experienceType": "Swimming",
-        "experience": 1
+        "experience": 1,
+        "type": "Collect"
     },
     "3": {
         "name": "Palm Leaf",
@@ -24,7 +26,8 @@
         "stacks": true,
         "quantity": 1,
         "experienceType": "Flying",
-        "experience": 1
+        "experience": 1,
+        "type": "Collect"
     },
     "4": {
         "name": "Wood Log",
@@ -33,6 +36,8 @@
         "stacks": true,
         "quantity": 1,
         "experienceType": "Spying",
-        "experience": 1
+        "experience": 1,
+        "type": "Refine",
+        "requirement": "Palm Leaf"
     }
 }
