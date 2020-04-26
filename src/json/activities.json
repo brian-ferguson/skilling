@@ -13,7 +13,7 @@
     "2": {
         "name": "Shallow Water",
         "id": 2,
-        "source": "/imgs/shallowwater.svg",
+        "source": "/imgs/beach.svg",
         "actions": [
             1,
             2
@@ -22,15 +22,15 @@
         "type": "Collect"
     },
     "3": {
-        "name": "Rainforest",
+        "name": "Campfire",
         "id": 3,
-        "source": "/imgs/rainforest.svg",
+        "source": "/imgs/fire.svg",
         "actions": [
             1,
             2
         ],
         "drop": 3,
-        "type": "Collect"
+        "type": "Cook"
     },
     "4": {
         "name": "Hut",

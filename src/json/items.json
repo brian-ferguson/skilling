@@ -1,8 +1,8 @@
 {
     "1": {
-        "name": "Hatchet",
+        "name": "Palm Logs",
         "id": 1,
-        "source": "/imgs/hatchet.svg",
+        "source": "/imgs/woodlog.svg",
         "stacks": true,
         "quantity": 1,
         "experienceType": "Woodcutting",
@@ -10,34 +10,35 @@
         "type": "Collect"
     },
     "2": {
-        "name": "Pickaxe",
+        "name": "Minnows",
         "id": 2,
-        "source": "/imgs/pickaxe.svg",
+        "source": "/imgs/fish.svg",
         "stacks": true,
         "quantity": 1,
-        "experienceType": "Swimming",
+        "experienceType": "Fishing",
         "experience": 1,
         "type": "Collect"
     },
     "3": {
-        "name": "Palm Leaf",
+        "name": "Cooked Minnows",
         "id": 3,
-        "source": "/imgs/palmleaf.svg",
+        "source": "/imgs/fishing.svg",
         "stacks": true,
         "quantity": 1,
         "experienceType": "Flying",
         "experience": 1,
-        "type": "Collect"
+        "type": "Cook",
+        "requirement": "Minnows"
     },
     "4": {
-        "name": "Wood Log",
+        "name": "Palm Planks",
         "id": 4,
-        "source": "/imgs/woodlog.svg",
+        "source": "/imgs/amount.svg",
         "stacks": true,
         "quantity": 1,
         "experienceType": "Spying",
         "experience": 1,
         "type": "Refine",
-        "requirement": "Palm Leaf"
+        "requirement": "Palm Logs"
     }
 }
