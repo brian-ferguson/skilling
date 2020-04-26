@@ -18,7 +18,7 @@
             1,
             2
         ],
-        "drop": [{"item": 8, "weight": 30},{"item": 7, "weight": 15},{"item": 11, "weight": 5},{"item": 9, "weight": 1}],
+        "drop": [{"item": 2, "weight": 50},{"item": 7, "weight": 15},{"item": 11, "weight": 5},{"item": 9, "weight": 1}],
         "type": "Collect"
     },
     "3": {
@@ -30,6 +30,7 @@
             2
         ],
         "drop": 3,
+        "itemRequirement": 2,
         "type": "Cook"
     },
     "4": {
@@ -41,6 +42,7 @@
             2
         ],
         "drop": 4,
+        "itemRequirement": 1,
         "type": "Refine"
     }
 }

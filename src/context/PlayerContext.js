@@ -16,7 +16,6 @@ export const Provider = props => {
 
 	useEffect(() => {
 		let currentLocations = Object.keys(locations_json[view])
-
 		let currentLocationActivities = [];
 
 		//get all the activities of the current location
@@ -36,108 +35,127 @@ export const Provider = props => {
 
 	const doActivity = (activity) => {
 
-		let loot = null;
+		//methods and functions
 
-				for (var key in activities_json) {
-				  if (activities_json.hasOwnProperty(key)) {
-				    if(activities_json[key].id == activity){
-							loot = activities_json[key].drop;
-						}
-				  }
-				}
+		//selectDrop: selects a item to drop from weighted probabilities
+		const selectDrop = () => {
 
-
-
-				let weightSum = loot.reduce((a, b) => a + (b['weight'] || 0), 0);
-				let random = Math.floor(Math.random() * (weightSum - 0 + 1) + 0);
-
-
-				let weight = 0;
-				let currentDrop = 0;
-
-				for(let i = 0; i < loot.length; i++) {
-					weight += loot[i].weight;
-
-					if(random <= weight){
-						currentDrop = items_json[loot[i].item];
-						break;
+			let loot = null;
+			for (var key in activities_json) {
+				if (activities_json.hasOwnProperty(key)) {
+					if(activities_json[key].id == activity){
+						loot = activities_json[key].drop;
 					}
 				}
+			}
 
-				
+			let weightSum = loot.reduce((a, b) => a + (b['weight'] || 0), 0);
+			let random = Math.floor(Math.random() * (weightSum - 0 + 1) + 0);
+			let weight = 0;
+			let currentDrop = 0;
 
-		const updateStats = (arr, setter) => {
-			if (arr.filter(e => e.name === currentDrop.experienceType).length > 0) {
-				let current_experience = arr[arr.map(i => i.name).indexOf(currentDrop.experienceType)].experience
-				let stat_index = arr.map(i => i.name).indexOf(currentDrop.experienceType)
-				let new_stats = [...arr]
-				new_stats[stat_index].experience = current_experience + currentDrop.experience
-				new_stats[stat_index].level = levelFormula(new_stats[stat_index].experience)
-				setter(new_stats)
-			} else {
-				let newStat = { name: currentDrop.experienceType, experience: currentDrop.experience, level: 1 }
-				setter(arr.concat(newStat))
+			for(let i = 0; i < loot.length; i++) {
+				weight += loot[i].weight;
+				if(random <= weight){
+					return currentDrop = items_json[loot[i].item];
+					break;
+				}
 			}
 		}
 
-		const collectResource = () => {
-			if(currentDrop.stacks){
-				updateStats(stats, setStats)
-				if(inventory.filter(e => e.id === currentDrop.id).length > 0){
-					let current_quantity = inventory[inventory.map(i => i.id).indexOf(currentDrop.id)].quantity;
-					const index = inventory.map(i => i.id).indexOf(currentDrop.id);
+		//collectResource: Adds an item to inventory
+		const collectResource = (drop) => {
+
+			if(drop.stacks){
+				updateStats(drop, stats, setStats)
+				if(inventory.filter(e => e.id === drop.id).length > 0){
+					let current_quantity = inventory[inventory.map(i => i.id).indexOf(drop.id)].quantity;
+					const index = inventory.map(i => i.id).indexOf(drop.id);
 					let new_inventory =  [...inventory];
 					new_inventory[index].quantity = current_quantity + 1;
 					setInventory(new_inventory);
 				}else{
-					setInventory(inventory.concat(currentDrop))
+					setInventory(inventory.concat(drop))
 				}
 			}else{
-				setInventory(inventory.concat(currentDrop))
+				setInventory(inventory.concat(drop))
 			}
 		}
 
-		const refineResource = () => {
-			if(inventory.filter(e => e.name === currentDrop.requirement)[0]) {
-				updateStats(stats, setStats)
-				if(currentDrop.stacks){
-					if(inventory.filter(e => e.id === currentDrop.id).length > 0){
-						let item_current_quantity = inventory[inventory.map(i => i.id).indexOf(currentDrop.id)].quantity;
-						let refine_current_quantity = inventory[inventory.map(i => i.name).indexOf(currentDrop.requirement)].quantity;
-						let item_index = inventory.map(i => i.id).indexOf(currentDrop.id);
-						let refine_index = inventory.map(i => i.name).indexOf(currentDrop.requirement)
-						let new_inventory = [...inventory];
-						if (new_inventory[refine_index].quantity > 0) {
-							new_inventory[item_index].quantity = item_current_quantity + 1;
-							new_inventory[refine_index].quantity = refine_current_quantity - 1;
-						}
-						if(new_inventory[refine_index].quantity === 0) {
-							new_inventory = new_inventory.filter(e => e !== new_inventory[refine_index])
-						}
-						setInventory(new_inventory);
-					}else{
-						let refine_current_quantity = inventory[inventory.map(i => i.name).indexOf(currentDrop.requirement)].quantity;
-						let refine_index = inventory.map(i => i.name).indexOf(currentDrop.requirement)
-						let new_inventory = [...inventory];
-						new_inventory[refine_index].quantity = refine_current_quantity - 1;
-						if(new_inventory[refine_index].quantity === 0) {
-							new_inventory = new_inventory.filter(e => e !== new_inventory[refine_index])
-						}
-						setInventory(inventory.concat(currentDrop))
-					}
-				}else{
-					setInventory(inventory.concat(currentDrop))
+		const removeResource = (item) => {
+			//find the index of the item to be removed in inventory
+			let removeIndex = inventory.map(i => i.id).indexOf(item.id);
+			console.log("remove index: ", removeIndex);
+			//get the quantity of the item to be removeIndex
+			let removeQuantity = inventory[removeIndex].quantity;
+			console.log("quantity before removing: ", removeQuantity);
+			//create a new inventory with the items quantity decremented
+			let reducedInventory = [...inventory];
+
+			if(removeQuantity > 1){
+				reducedInventory[removeIndex].quantity = removeQuantity - 1;
+			}
+			if(removeQuantity === 1){
+				//remove the item object from inventory
+				reducedInventory = reducedInventory.filter(e => e !== reducedInventory[removeIndex])
+				//delete reducedInventory[removeIndex]
+			}
+			setInventory(reducedInventory);
+
+		}
+
+		//updateStats:
+		const updateStats = (drop, arr, setter) => {
+			if (arr.filter(e => e.name === drop.experienceType).length > 0) {
+				let current_experience = arr[arr.map(i => i.name).indexOf(drop.experienceType)].experience
+				let stat_index = arr.map(i => i.name).indexOf(drop.experienceType)
+				let new_stats = [...arr]
+				new_stats[stat_index].experience = current_experience + drop.experience
+				new_stats[stat_index].level = levelFormula(new_stats[stat_index].experience)
+				setter(new_stats)
+			} else {
+				let newStat = { name: drop.experienceType, experience: drop.experience, level: 1 }
+				setter(arr.concat(newStat))
+			}
+		}
+		const refineResource = (add, remove) => {
+			//remove the item requirement from inventory
+			removeResource(items_json[remove]);
+			//updateStats(stats, setStats)
+			collectResource(items_json[add]);
+
+		}
+
+
+		//doActivity:
+
+		//get the type of the Activity
+		let activityType = items_json[activity].type;
+
+		//if the activity type is Collect
+		if(activityType === "Collect"){
+			let currentDrop = selectDrop()
+			collectResource(currentDrop)
+
+		//if the activity type is Refine
+	}else if (activityType === 'Refine' || 'Cook') {
+
+				//get the item requirement to refine
+				let itemRequired = activities_json[activity].itemRequirement;
+				let itemRequiredIndex = inventory.map(i => i.id).indexOf(itemRequired);
+				let itemRequiredQuantity = inventory[itemRequiredIndex].quantity;
+				let itemOutput = activities_json[activity].drop;
+
+				if(itemRequiredQuantity > 1){
+					refineResource(itemOutput, itemRequired)
 				}
 			}
-		}
 
-		if(currentDrop){
-			if(currentDrop.type === 'Collect') {
-				collectResource()
-			} else if (currentDrop.type === 'Refine' || 'Cook') {
-				refineResource()
-			}
-		}
+
+
+		//if the activity type is Craft
+
+
 	};
 
 	const playerContext = {
