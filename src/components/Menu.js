@@ -6,7 +6,6 @@ const nav_styles = {
     textAlign: 'center', 
     width: '100%',
     height: 30, paddingTop: 10,
-    border: '1px solid black',
     userSelect: 'none',
     cursor: 'pointer'
 }
@@ -14,19 +13,11 @@ const nav_styles = {
 const Menu = () => {
     const [menu, setMenu] = useState("Inventory")
 
-    const handleMenuChange = () => {
-        if (menu === "Inventory") {
-            setMenu("Stats")
-        } else {
-            setMenu("Inventory")
-        }
-    }
-
-    return <div>
+    return <div style={{borderLeft: '1px solid black'}}>
         {/* Menu */}
     	<div style={{display: 'flex'}}>
-            <div onClick={handleMenuChange} style={{...nav_styles, background: menu === "Inventory" ? 'Gainsboro' : '#F2F2F2'}}>Inventory</div>
-            <div onClick={handleMenuChange} style={{...nav_styles, background: menu === "Stats" ? 'Gainsboro' : '#F2F2F2'}}>Stats</div>
+            <div id={"Inventory"} onClick={(e) => setMenu(e.target.id)} style={{...nav_styles, background: menu === "Inventory" ? 'Gainsboro' : '#F2F2F2'}}>Inventory</div>
+            <div id={"Stats"} onClick={(e) => setMenu(e.target.id)} style={{...nav_styles, background: menu === "Stats" ? 'Gainsboro' : '#F2F2F2'}}>Stats</div>
         </div>
 
         {menu === "Inventory"
