@@ -105,7 +105,7 @@ export const Provider = props => {
 		if(currentDrop){
 			if(currentDrop.type === 'Collect') {
 				collectResource()
-			} else if (currentDrop.type === 'Refine') {
+			} else if (currentDrop.type === 'Refine' || 'Cook') {
 				refineResource()
 			}
 		} 
