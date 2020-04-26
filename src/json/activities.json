@@ -3,32 +3,44 @@
         "name": "Palm Tree",
         "id": 1,
         "source": "/imgs/palmtree.svg",
-        "actions": [1,2],
-        "drop": 1
-
+        "actions": [
+            1,
+            2
+        ],
+        "drop": 1,
+        "type": "Collect"
     },
     "2": {
         "name": "Shallow Water",
         "id": 2,
         "source": "/imgs/shallowwater.svg",
-        "actions": [1,2],
-        "drop": 2
+        "actions": [
+            1,
+            2
+        ],
+        "drop": 2,
+        "type": "Collect"
     },
-
     "3": {
         "name": "Rainforest",
         "id": 3,
         "source": "/imgs/rainforest.svg",
-        "actions": [1,2],
-        "drop": 3
-
+        "actions": [
+            1,
+            2
+        ],
+        "drop": 3,
+        "type": "Collect"
     },
     "4": {
         "name": "Hut",
         "id": 4,
         "source": "/imgs/hut.svg",
-        "actions": [1,2],
-        "drop": 4
+        "actions": [
+            1,
+            2
+        ],
+        "drop": 4,
+        "type": "Refine"
     }
-
 }
