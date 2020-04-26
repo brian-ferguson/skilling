@@ -35,51 +35,80 @@ export const Provider = props => {
 	};
 
 	const doActivity = (activity) => {
-
-		//get the item with the corresponding id
 		let currentDrop = items_json[activity];
 
-		if(currentDrop) {
-			//if we already have that experience type, add experience to it
-			if (stats.filter(e => e.name === currentDrop.experienceType).length > 0) {
-				let current_experience = stats[stats.map(i => i.name).indexOf(currentDrop.experienceType)].experience
-				let stat_index = stats.map(i => i.name).indexOf(currentDrop.experienceType)
-				let new_stats = [...stats]
+		const updateStats = (arr, setter) => {
+			if (arr.filter(e => e.name === currentDrop.experienceType).length > 0) {
+				let current_experience = arr[arr.map(i => i.name).indexOf(currentDrop.experienceType)].experience
+				let stat_index = arr.map(i => i.name).indexOf(currentDrop.experienceType)
+				let new_stats = [...arr]
 				new_stats[stat_index].experience = current_experience + currentDrop.experience
 				new_stats[stat_index].level = levelFormula(new_stats[stat_index].experience)
-				setStats(new_stats)
+				setter(new_stats)
 			} else {
 				let newStat = { name: currentDrop.experienceType, experience: currentDrop.experience, level: 1 }
-				setStats(stats.concat(newStat))
+				setter(arr.concat(newStat))
+			}
+		}
+
+		const collectResource = () => {
+			if(currentDrop.stacks){
+				updateStats(stats, setStats)
+				if(inventory.filter(e => e.id === currentDrop.id).length > 0){
+					let current_quantity = inventory[inventory.map(i => i.id).indexOf(currentDrop.id)].quantity;
+					const index = inventory.map(i => i.id).indexOf(currentDrop.id);
+					let new_inventory =  [...inventory];
+					new_inventory[index].quantity = current_quantity + 1;
+					setInventory(new_inventory);
+				}else{
+					setInventory(inventory.concat(currentDrop))
+				}
+			}else{
+				setInventory(inventory.concat(currentDrop))
+			}	
+		}
+		
+		const refineResource = () => {
+			if(inventory.filter(e => e.name === currentDrop.requirement)[0]) {
+				updateStats(stats, setStats)
+				if(currentDrop.stacks){
+					if(inventory.filter(e => e.id === currentDrop.id).length > 0){
+						let item_current_quantity = inventory[inventory.map(i => i.id).indexOf(currentDrop.id)].quantity;
+						let refine_current_quantity = inventory[inventory.map(i => i.name).indexOf(currentDrop.requirement)].quantity;
+						let item_index = inventory.map(i => i.id).indexOf(currentDrop.id);
+						let refine_index = inventory.map(i => i.name).indexOf(currentDrop.requirement)
+						let new_inventory = [...inventory];
+						if (new_inventory[refine_index].quantity > 0) {
+							new_inventory[item_index].quantity = item_current_quantity + 1;
+							new_inventory[refine_index].quantity = refine_current_quantity - 1;
+						}
+						if(new_inventory[refine_index].quantity === 0) {
+							new_inventory = new_inventory.filter(e => e !== new_inventory[refine_index])
+						}
+						setInventory(new_inventory);
+					}else{
+						let refine_current_quantity = inventory[inventory.map(i => i.name).indexOf(currentDrop.requirement)].quantity;
+						let refine_index = inventory.map(i => i.name).indexOf(currentDrop.requirement)
+						let new_inventory = [...inventory];
+						new_inventory[refine_index].quantity = refine_current_quantity - 1;
+						if(new_inventory[refine_index].quantity === 0) {
+							new_inventory = new_inventory.filter(e => e !== new_inventory[refine_index])
+						}
+						setInventory(inventory.concat(currentDrop))
+					}
+				}else{
+					setInventory(inventory.concat(currentDrop))
+				}
 			}
 		}
 
 		if(currentDrop){
-			if(currentDrop.stacks){
-				//if stacks is true, and the item is already in the inventory > increment the item quantity
-				if(inventory.filter(e => e.id === currentDrop.id).length > 0){
-
-					//get the quantity of the item in the players Inventory
-					let current_quantity = inventory[inventory.map(i => i.id).indexOf(currentDrop.id)].quantity;
-					//get the index of the item to be incremented
-					const index = inventory.map(i => i.id).indexOf(currentDrop.id);
-
-					let new_inventory =  [...inventory];
-					new_inventory[index].quantity = current_quantity + 1;
-
-					setInventory(new_inventory);
-
-
-				//if stacks is true, and the item is not in the inventory > add the item to the inventory
-				}else{
-					setInventory(inventory.concat(currentDrop))
-				}
-
-			//if stacks is false, add the item to the players inventory
-			}else{
-				setInventory(inventory.concat(currentDrop))
+			if(currentDrop.type === 'Collect') {
+				collectResource()
+			} else if (currentDrop.type === 'Refine') {
+				refineResource()
 			}
-		}
+		} 
 	};
 
 	const playerContext = {
