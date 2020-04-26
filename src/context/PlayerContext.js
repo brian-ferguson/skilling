@@ -59,12 +59,12 @@ export const Provider = props => {
 					weight += loot[i].weight;
 
 					if(random <= weight){
-						currentDrop = loot[i].item;
+						currentDrop = items_json[loot[i].item];
 						break;
 					}
 				}
 
-				console.log(currentDrop);
+				
 
 		const updateStats = (arr, setter) => {
 			if (arr.filter(e => e.name === currentDrop.experienceType).length > 0) {
