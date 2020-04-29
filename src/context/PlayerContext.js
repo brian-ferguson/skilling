@@ -33,13 +33,12 @@ export const Provider = props => {
 		return Math.floor(Math.sqrt(exp) * 1.2);
 	};
 
+	//takes the id of an activity (integer)
 	const doActivity = (activity) => {
 
 		//methods and functions
-
 		//selectDrop: selects a item to drop from weighted probabilities
 		const selectDrop = () => {
-
 			let loot = null;
 			for (var key in activities_json) {
 				if (activities_json.hasOwnProperty(key)) {
@@ -48,12 +47,10 @@ export const Provider = props => {
 					}
 				}
 			}
-
 			let weightSum = loot.reduce((a, b) => a + (b['weight'] || 0), 0);
 			let random = Math.floor(Math.random() * (weightSum - 0 + 1) + 0);
 			let weight = 0;
 			let currentDrop = 0;
-
 			for(let i = 0; i < loot.length; i++) {
 				weight += loot[i].weight;
 				if(random <= weight){
@@ -63,45 +60,84 @@ export const Provider = props => {
 			}
 		}
 
-		//collectResource: Adds an item to inventory
-		const collectResource = (drop) => {
-
-			if(drop.stacks){
-				updateStats(drop, stats, setStats)
-				if(inventory.filter(e => e.id === drop.id).length > 0){
-					let current_quantity = inventory[inventory.map(i => i.id).indexOf(drop.id)].quantity;
-					const index = inventory.map(i => i.id).indexOf(drop.id);
-					let new_inventory =  [...inventory];
-					new_inventory[index].quantity = current_quantity + 1;
-					setInventory(new_inventory);
-				}else{
-					setInventory(inventory.concat(drop))
-				}
+		//checkInventory: takes an item id and returns the quantity of the item in inventory
+		const checkInventory = (item) => {
+			//get the index of the item in inventory
+			let inventoryIndex = checkInventoryIndex(item);
+			//if the index does not exist, return 0
+			if(inventoryIndex === -1){
+				return 0
+			//if the index does exist, return the quantity
 			}else{
-				setInventory(inventory.concat(drop))
+				return inventory[inventoryIndex].quantity;
 			}
+
 		}
 
-		const removeResource = (item) => {
-			//find the index of the item to be removed in inventory
-			let removeIndex = inventory.map(i => i.id).indexOf(item.id);
-			console.log("remove index: ", removeIndex);
-			//get the quantity of the item to be removeIndex
-			let removeQuantity = inventory[removeIndex].quantity;
-			console.log("quantity before removing: ", removeQuantity);
-			//create a new inventory with the items quantity decremented
-			let reducedInventory = [...inventory];
+		//checkInventoryIndex: takes an item id and returns the inventory index
+		const checkInventoryIndex = (id) => {
+			return inventory.map(i => i.id).indexOf(id);
+		}
 
-			if(removeQuantity > 1){
-				reducedInventory[removeIndex].quantity = removeQuantity - 1;
-			}
-			if(removeQuantity === 1){
-				//remove the item object from inventory
-				reducedInventory = reducedInventory.filter(e => e !== reducedInventory[removeIndex])
-				//delete reducedInventory[removeIndex]
-			}
-			setInventory(reducedInventory);
+		//updateInventory
+		const updateInventory = (add, remove) => {
 
+			//instantiate copy of current inventory
+			let new_inventory =  [...inventory];
+
+			//if remove is undefined, add or increment the item in inventoryIndex
+			if(remove === undefined){
+
+				//if the item to be collected does not exist in inventory
+				if(checkInventoryIndex(add.id) === -1){
+					//add the item to the inventory
+					new_inventory.push(add);
+				//if the item to be collected does exist in inventory
+				}else{
+					//increment the item quantity in inventory
+					new_inventory[checkInventoryIndex(add.id)].quantity = new_inventory[checkInventoryIndex(add.id)].quantity + 1;
+				}
+
+			//if remove is defined (refine)
+			}else{
+
+				//if the quantity of the item to remove is 1
+				if(checkInventory(remove.id) === 1){
+
+					//if the quantity of the item to add is 0
+					if(checkInventoryIndex(add.id) === -1){
+						//delete the remove item from inventory and add the add item
+						new_inventory = new_inventory.filter(e => e !== new_inventory[checkInventoryIndex(remove.id)])
+						new_inventory.push(add);
+					//if the quantity of the item to add is more than 0
+					}else{
+						//delete the remove item from inventory and increment the add item
+						//
+						console.log("new inv  before (removee, not added): ", new_inventory);
+						//new_inventory = new_inventory.splice(remove.id, 1);
+						new_inventory = new_inventory.filter(e => e !== new_inventory[checkInventoryIndex(remove.id)])
+						console.log("new inv (removee, not added): ", new_inventory);
+
+						new_inventory[checkInventoryIndex(add.id)].quantity = new_inventory[checkInventoryIndex(add.id)].quantity + 1;
+					}
+
+				//if the quantity of the item to remove is greater than 1
+				}else{
+					//if the quantity of the item to add is 0
+					if(checkInventory(add.id) === 0){
+						//decrement the remove item from inventory and add the add item
+						new_inventory[checkInventoryIndex(remove.id)].quantity = new_inventory[checkInventoryIndex(remove.id)].quantity - 1;
+						new_inventory.push(add);
+					//if the quantity of the item to add is greater than 0
+					}else{
+						//decrement the remove item from inventory and increment the add item
+						new_inventory[checkInventoryIndex(remove.id)].quantity = new_inventory[checkInventoryIndex(remove.id)].quantity - 1;
+						new_inventory[checkInventoryIndex(add.id)].quantity = new_inventory[checkInventoryIndex(add.id)].quantity + 1;
+					}
+				}
+			}
+			//update state to the new inventory
+			setInventory(new_inventory);
 		}
 
 		//updateStats:
@@ -118,14 +154,6 @@ export const Provider = props => {
 				setter(arr.concat(newStat))
 			}
 		}
-		const refineResource = (add, remove) => {
-			//remove the item requirement from inventory
-			removeResource(items_json[remove]);
-			//updateStats(stats, setStats)
-			collectResource(items_json[add]);
-
-		}
-
 
 		//doActivity:
 
@@ -135,19 +163,21 @@ export const Provider = props => {
 		//if the activity type is Collect
 		if(activityType === "Collect"){
 			let currentDrop = selectDrop()
-			collectResource(currentDrop)
+			//collectResource(currentDrop)
+			updateInventory(currentDrop)
 
 		//if the activity type is Refine
 	}else if (activityType === 'Refine' || 'Cook') {
 
 				//get the item requirement to refine
-				let itemRequired = activities_json[activity].itemRequirement;
-				let itemRequiredIndex = inventory.map(i => i.id).indexOf(itemRequired);
-				let itemRequiredQuantity = inventory[itemRequiredIndex].quantity;
-				let itemOutput = activities_json[activity].drop;
+				let itemRequiredID = activities_json[activity].itemRequirement;
+				let itemRequired = items_json[itemRequiredID];
+				let itemOutputID = activities_json[activity].drop;
+				let itemOutput = items_json[itemOutputID];
 
-				if(itemRequiredQuantity > 1){
-					refineResource(itemOutput, itemRequired)
+				//if the required item exists in inventory
+				if(checkInventoryIndex(itemRequiredID) != -1){
+					updateInventory(itemOutput, itemRequired);
 				}
 			}
 
