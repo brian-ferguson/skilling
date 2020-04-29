@@ -42,7 +42,7 @@ export const Provider = props => {
 			let loot = null;
 			for (var key in activities_json) {
 				if (activities_json.hasOwnProperty(key)) {
-					if(activities_json[key].id == activity){
+					if(activities_json[key].id === parseInt(activity)){
 						loot = activities_json[key].drop;
 					}
 				}
@@ -50,12 +50,12 @@ export const Provider = props => {
 			let weightSum = loot.reduce((a, b) => a + (b['weight'] || 0), 0);
 			let random = Math.floor(Math.random() * (weightSum - 0 + 1) + 0);
 			let weight = 0;
-			let currentDrop = 0;
+
 			for(let i = 0; i < loot.length; i++) {
+
 				weight += loot[i].weight;
 				if(random <= weight){
-					return currentDrop = items_json[loot[i].item];
-					break;
+					return items_json[loot[i].item]
 				}
 			}
 		}
@@ -173,7 +173,7 @@ export const Provider = props => {
 				let itemOutput = items_json[itemOutputID];
 
 				//if the required item exists in inventory
-				if(checkInventoryIndex(itemRequiredID) != -1){
+				if(checkInventoryIndex(itemRequiredID) !== -1){
 					updateInventory(itemOutput, itemRequired);
 					updateStats(itemOutput)
 				}
