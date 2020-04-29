@@ -112,13 +112,8 @@ export const Provider = props => {
 					//if the quantity of the item to add is more than 0
 					}else{
 						//delete the remove item from inventory and increment the add item
-						//
-						console.log("new inv  before (removee, not added): ", new_inventory);
-						//new_inventory = new_inventory.splice(remove.id, 1);
-						new_inventory = new_inventory.filter(e => e !== new_inventory[checkInventoryIndex(remove.id)])
-						console.log("new inv (removee, not added): ", new_inventory);
-
 						new_inventory[checkInventoryIndex(add.id)].quantity = new_inventory[checkInventoryIndex(add.id)].quantity + 1;
+						new_inventory = new_inventory.filter(e => e !== new_inventory[checkInventoryIndex(remove.id)])
 					}
 
 				//if the quantity of the item to remove is greater than 1
@@ -163,6 +158,7 @@ export const Provider = props => {
 		//if the activity type is Collect
 		if(activityType === "Collect"){
 			let currentDrop = selectDrop()
+			console.log("collect drop: ", currentDrop);
 			//collectResource(currentDrop)
 			updateInventory(currentDrop)
 
