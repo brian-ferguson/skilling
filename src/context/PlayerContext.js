@@ -136,17 +136,17 @@ export const Provider = props => {
 		}
 
 		//updateStats:
-		const updateStats = (drop, arr, setter) => {
-			if (arr.filter(e => e.name === drop.experienceType).length > 0) {
-				let current_experience = arr[arr.map(i => i.name).indexOf(drop.experienceType)].experience
-				let stat_index = arr.map(i => i.name).indexOf(drop.experienceType)
-				let new_stats = [...arr]
+		const updateStats = drop => {
+			if (stats.filter(e => e.name === drop.experienceType).length > 0) {
+				let current_experience = stats[stats.map(i => i.name).indexOf(drop.experienceType)].experience
+				let stat_index = stats.map(i => i.name).indexOf(drop.experienceType)
+				let new_stats = [...stats]
 				new_stats[stat_index].experience = current_experience + drop.experience
 				new_stats[stat_index].level = levelFormula(new_stats[stat_index].experience)
-				setter(new_stats)
+				setStats(new_stats)
 			} else {
 				let newStat = { name: drop.experienceType, experience: drop.experience, level: 1 }
-				setter(arr.concat(newStat))
+				setStats(stats.concat(newStat))
 			}
 		}
 
@@ -161,6 +161,7 @@ export const Provider = props => {
 			console.log("collect drop: ", currentDrop);
 			//collectResource(currentDrop)
 			updateInventory(currentDrop)
+			updateStats(currentDrop)
 
 		//if the activity type is Refine
 	}else if (activityType === 'Refine' || 'Cook') {
@@ -174,6 +175,7 @@ export const Provider = props => {
 				//if the required item exists in inventory
 				if(checkInventoryIndex(itemRequiredID) != -1){
 					updateInventory(itemOutput, itemRequired);
+					updateStats(itemOutput)
 				}
 			}
 
