@@ -30,7 +30,7 @@
             2
         ],
         "drop": 3,
-        "itemRequirement": 2,
+        "itemRequirements": [{"id": 2, "quantity": 1}],
         "type": "Cook"
     },
     "4": {
@@ -42,7 +42,7 @@
             2
         ],
         "drop": 4,
-        "itemRequirement": 1,
+        "itemRequirements": [{"id": 6, "quantity": 1}, {"id": 7, "quantity": 2}],
         "type": "Refine"
     }
 }

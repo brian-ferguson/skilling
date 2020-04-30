@@ -79,14 +79,57 @@ export const Provider = props => {
 			return inventory.map(i => i.id).indexOf(id);
 		}
 
+		//checkInventoryRequiremnets: takes an array of objects: {"id":0, "quantity":0}
+		const checkInventoryRequirements = (list) => {
+			//for each element in the list of item requirements
+			for (let i = 0; i < list.length; i++) {
+				//get the required id and quantity
+				let requiredId = list[i].id;
+				let requiredQuantity = list[i].quantity;
+				//if the required id is not in inventory break and return false
+				if(checkInventoryIndex(requiredId) === -1){
+					return false;
+					break;
+				//if the required id is in inventory
+				}else{
+					//if the required id is in inventory but the quantity requirment is not met break and return false
+					if(checkInventory(requiredId) < requiredQuantity){
+						return false;
+						break;
+					//if the required id is in inventory and the quantity is greater than or equal to required quantity continue
+					}
+				}
+			}
+			//return true
+			return true
+		}
+
+
+		const addInventoryItem = (add) => {
+			let new_inventory =  [...inventory];
+			//if the item to be collected does not exist in inventory
+			if(checkInventoryIndex(add.id) === -1){
+				//add the item to the inventory
+				new_inventory.push(add);
+			//if the item to be collected does exist in inventory
+			}else{
+				//increment the item quantity in inventory
+				new_inventory[checkInventoryIndex(add.id)].quantity = new_inventory[checkInventoryIndex(add.id)].quantity + 1;
+			}
+			setInventory(new_inventory);
+		}
+
+
 		//updateInventory
 		const updateInventory = (add, remove) => {
 
 			//instantiate copy of current inventory
 			let new_inventory =  [...inventory];
 
+
 			//if remove is undefined, add or increment the item in inventoryIndex
 			if(remove === undefined){
+
 
 				//if the item to be collected does not exist in inventory
 				if(checkInventoryIndex(add.id) === -1){
@@ -98,41 +141,43 @@ export const Provider = props => {
 					new_inventory[checkInventoryIndex(add.id)].quantity = new_inventory[checkInventoryIndex(add.id)].quantity + 1;
 				}
 
+
+
 			//if remove is defined (refine)
 			}else{
 
-				//if the quantity of the item to remove is 1
-				if(checkInventory(remove.id) === 1){
+				//add the items
+				//add the new items
 
-					//if the quantity of the item to add is 0
-					if(checkInventoryIndex(add.id) === -1){
-						//delete the remove item from inventory and add the add item
-						new_inventory = new_inventory.filter(e => e !== new_inventory[checkInventoryIndex(remove.id)])
-						new_inventory.push(add);
-					//if the quantity of the item to add is more than 0
-					}else{
-						//delete the remove item from inventory and increment the add item
-						new_inventory[checkInventoryIndex(add.id)].quantity = new_inventory[checkInventoryIndex(add.id)].quantity + 1;
-						new_inventory = new_inventory.filter(e => e !== new_inventory[checkInventoryIndex(remove.id)])
-					}
-
-				//if the quantity of the item to remove is greater than 1
+				if(checkInventoryIndex(add.id) === -1){
+					//add the item to the inventory
+					new_inventory.push(add);
+				//if the item to be collected does exist in inventory
 				}else{
-					//if the quantity of the item to add is 0
-					if(checkInventory(add.id) === 0){
-						//decrement the remove item from inventory and add the add item
-						new_inventory[checkInventoryIndex(remove.id)].quantity = new_inventory[checkInventoryIndex(remove.id)].quantity - 1;
-						new_inventory.push(add);
-					//if the quantity of the item to add is greater than 0
+					//increment the item quantity in inventory
+					new_inventory[checkInventoryIndex(add.id)].quantity = new_inventory[checkInventoryIndex(add.id)].quantity + 1;
+				}
+				
+
+				//for each required item and quantity
+				for (let i = 0; i < remove.length; i++) {
+					console.log("rem: ", remove);
+
+					//if the item quantity to remove results in 0 quantity in inventory
+					if(checkInventory(remove[i].id) - remove[i].quantity === 0){
+						//delete the element from inventory
+						new_inventory = new_inventory.filter(e => e !== new_inventory[checkInventoryIndex(remove[i].id)])
+					//if the item quantity to remove results in 1 or more quantity in inventory
 					}else{
-						//decrement the remove item from inventory and increment the add item
-						new_inventory[checkInventoryIndex(remove.id)].quantity = new_inventory[checkInventoryIndex(remove.id)].quantity - 1;
-						new_inventory[checkInventoryIndex(add.id)].quantity = new_inventory[checkInventoryIndex(add.id)].quantity + 1;
+						//decrement the item from inventory
+						new_inventory[checkInventoryIndex(remove[i].id)].quantity = new_inventory[checkInventoryIndex(remove[i].id)].quantity - remove[i].quantity;
 					}
 				}
+
 			}
 			//update state to the new inventory
 			setInventory(new_inventory);
+
 		}
 
 		//updateStats:
@@ -166,10 +211,23 @@ export const Provider = props => {
 		//if the activity type is Refine
 	}else if (activityType === 'Refine' || 'Cook') {
 
+		let itemRequirements = activities_json[activity].itemRequirements
+		let itemOutputID = activities_json[activity].drop;
+		let itemOutput = items_json[itemOutputID];
+		//check if the required item(s) are in inventory
+		let check = checkInventoryRequirements(itemRequirements)
+
+		if(check === true){
+			//update inventory
+			updateInventory(itemOutput, itemRequirements);
+			//updateStats(itemOutput)
+		}
+
+				/*
 				//get the item requirement to refine
 				let itemRequiredID = activities_json[activity].itemRequirement;
 				let itemRequired = items_json[itemRequiredID];
-				let itemOutputID = activities_json[activity].drop;
+
 				let itemOutput = items_json[itemOutputID];
 
 				//if the required item exists in inventory
@@ -177,6 +235,7 @@ export const Provider = props => {
 					updateInventory(itemOutput, itemRequired);
 					updateStats(itemOutput)
 				}
+				*/
 			}
 
 
