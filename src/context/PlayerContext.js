@@ -35,6 +35,46 @@ export const Provider = props => {
 		return Math.floor(Math.sqrt(exp) * 1.2);
 	};
 
+	const checkInventoryIndex = (id) => {
+		return inventory.map(i => i.id).indexOf(id);
+	}
+
+	const checkInventory = (item) => {
+		//get the index of the item in inventory
+		let inventoryIndex = checkInventoryIndex(item);
+		//if the index does not exist, return 0
+		if(inventoryIndex === -1){
+			return 0
+		//if the index does exist, return the quantity
+		}else{
+			return inventory[inventoryIndex].quantity;
+		}
+
+	}
+
+	const checkInventoryRequirements = (list) => {
+		//for each element in the list of item requirements
+		for (let i = 0; i < list.length; i++) {
+			//get the required id and quantity
+			let requiredId = list[i].id;
+			let requiredQuantity = list[i].quantity;
+			//if the required id is not in inventory break and return false
+			if(checkInventoryIndex(requiredId) === -1){
+				return false;
+			//if the required id is in inventory
+			}else{
+				//if the required id is in inventory but the quantity requirment is not met break and return false
+				if(checkInventory(requiredId) < requiredQuantity){
+					return false;
+				//if the required id is in inventory and the quantity is greater than or equal to required quantity continue
+				}
+			}
+		}
+		//return true
+		return true
+	}
+
+
 	//takes the id of an activity (integer)
 	const doActivity = (activity) => {
 
@@ -61,64 +101,6 @@ export const Provider = props => {
 				}
 			}
 		}
-
-		//checkInventory: takes an item id and returns the quantity of the item in inventory
-		const checkInventory = (item) => {
-			//get the index of the item in inventory
-			let inventoryIndex = checkInventoryIndex(item);
-			//if the index does not exist, return 0
-			if(inventoryIndex === -1){
-				return 0
-			//if the index does exist, return the quantity
-			}else{
-				return inventory[inventoryIndex].quantity;
-			}
-
-		}
-
-		//checkInventoryIndex: takes an item id and returns the inventory index
-		const checkInventoryIndex = (id) => {
-			return inventory.map(i => i.id).indexOf(id);
-		}
-
-		//checkInventoryRequiremnets: takes an array of objects: {"id":0, "quantity":0}
-		const checkInventoryRequirements = (list) => {
-			//for each element in the list of item requirements
-			for (let i = 0; i < list.length; i++) {
-				//get the required id and quantity
-				let requiredId = list[i].id;
-				let requiredQuantity = list[i].quantity;
-				//if the required id is not in inventory break and return false
-				if(checkInventoryIndex(requiredId) === -1){
-					return false;
-				//if the required id is in inventory
-				}else{
-					//if the required id is in inventory but the quantity requirment is not met break and return false
-					if(checkInventory(requiredId) < requiredQuantity){
-						return false;
-					//if the required id is in inventory and the quantity is greater than or equal to required quantity continue
-					}
-				}
-			}
-			//return true
-			return true
-		}
-
-
-		const addInventoryItem = (add) => {
-			let new_inventory =  [...inventory];
-			//if the item to be collected does not exist in inventory
-			if(checkInventoryIndex(add.id) === -1){
-				//add the item to the inventory
-				new_inventory.push(add);
-			//if the item to be collected does exist in inventory
-			}else{
-				//increment the item quantity in inventory
-				new_inventory[checkInventoryIndex(add.id)].quantity = new_inventory[checkInventoryIndex(add.id)].quantity + 1;
-			}
-			setInventory(new_inventory);
-		}
-
 
 		//updateInventory
 		const updateInventory = (add, remove) => {
