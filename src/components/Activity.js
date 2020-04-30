@@ -60,10 +60,14 @@ const Activity = (props) => {
 			if(activities_json[props.id].type === 'Collect') {
 				setAvailable(false)
 				setWork(true)
+				setTime(divisor)
+				doActivity(props.id)
 			} else {
 				if(checkInventoryRequirements(itemRequirements)){
 					setAvailable(false)
 					setWork(true)
+					setTime(divisor)
+					doActivity(props.id)
 				}
 			}
 			
