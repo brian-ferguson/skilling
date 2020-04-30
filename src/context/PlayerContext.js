@@ -13,6 +13,7 @@ export const Provider = props => {
 	const [inventory, setInventory] = useState([]);
 	const [stats, setStats] = useState([])
 	const [locationActivities, setLocationActivities] = useState([]);
+	const [work, setWork] = useState(false)
 
 	useEffect(() => {
 		let currentLocations = Object.keys(locations_json[view])
@@ -249,6 +250,8 @@ export const Provider = props => {
 		doActivity,
 		view,
 		setView,
+		work,
+		setWork,
 		stats,
 		locationActivities,
 		setLocationActivities,
