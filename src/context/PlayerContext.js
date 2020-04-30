@@ -164,7 +164,8 @@ export const Provider = props => {
 					//if the item quantity to remove results in 0 quantity in inventory
 					if(checkInventory(remove[i].id) - remove[i].quantity === 0){
 						//delete the element from inventory
-						new_inventory = new_inventory.filter(e => e !== new_inventory[checkInventoryIndex(remove[i].id)])
+						let temp = [...new_inventory]
+						new_inventory = temp.filter(e => e !== temp[checkInventoryIndex(remove[i].id)])
 					//if the item quantity to remove results in 1 or more quantity in inventory
 					}else{
 						//decrement the item from inventory
