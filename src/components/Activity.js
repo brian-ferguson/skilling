@@ -2,6 +2,7 @@ import  React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../context";
 // import { Line } from 'rc-progress'
 import ProgressBar from '../tools/ProgressBar'
+import activities_json from '../json/activities.json'
 
 const container_styles = {
 	border: '1px solid #7D7D7D',
@@ -31,7 +32,7 @@ const button_styles = {
 
 const Activity = (props) => {
 	const playerContext = useContext(PlayerContext);
-	const { doActivity, work, setWork } = playerContext;
+	const { doActivity, work, setWork, checkInventoryRequirements } = playerContext;
 	const [time, setTime] = useState(0)
 	const [available, setAvailable] = useState(true)
 
@@ -54,11 +55,18 @@ const Activity = (props) => {
     }, [time, work, props.id, doActivity, setWork, available])
 
 	const startActivity = () => {
+		let itemRequirements = activities_json[props.id].itemRequirements
         if(!work) {
-			doActivity(props.id)
-            setAvailable(false)
-			setWork(true)
-			setTime(divisor)
+			if(activities_json[props.id].type === 'Collect') {
+				setAvailable(false)
+				setWork(true)
+			} else {
+				if(checkInventoryRequirements(itemRequirements)){
+					setAvailable(false)
+					setWork(true)
+				}
+			}
+			
         }
     }
 

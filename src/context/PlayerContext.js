@@ -185,7 +185,6 @@ export const Provider = props => {
 		if(activityType === "Collect"){
 			let currentDrop = selectDrop()
 			setMessages([...messages, `You ${activityType} a ${currentDrop.name} and gain ${currentDrop.experience} ${currentDrop.experienceType} experience.`])
-			console.log("collect drop: ", currentDrop);
 			//collectResource(currentDrop)
 			updateInventory(currentDrop)
 			updateStats(currentDrop)
@@ -240,6 +239,7 @@ export const Provider = props => {
 		stats,
 		locationActivities,
 		setLocationActivities,
+		checkInventoryRequirements
 	};
 
 	return <Context.Provider value={playerContext}>{props.children}</Context.Provider>
