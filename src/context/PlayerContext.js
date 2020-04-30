@@ -232,6 +232,7 @@ export const Provider = props => {
 		setInventory,
 		doActivity,
 		messages,
+		setMessages,
 		view,
 		setView,
 		work,
