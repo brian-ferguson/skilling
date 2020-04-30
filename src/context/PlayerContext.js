@@ -13,6 +13,7 @@ export const Provider = props => {
 	const [inventory, setInventory] = useState([]);
 	const [stats, setStats] = useState([])
 	const [locationActivities, setLocationActivities] = useState([]);
+	const [messages, setMessages] = useState([])
 
 	useEffect(() => {
 		let currentLocations = Object.keys(locations_json[view])
@@ -159,8 +160,6 @@ export const Provider = props => {
 
 				//for each required item and quantity
 				for (let i = 0; i < remove.length; i++) {
-					console.log("rem: ", remove);
-
 					//if the item quantity to remove results in 0 quantity in inventory
 					if(checkInventory(remove[i].id) - remove[i].quantity === 0){
 						//delete the element from inventory
@@ -201,6 +200,7 @@ export const Provider = props => {
 		//if the activity type is Collect
 		if(activityType === "Collect"){
 			let currentDrop = selectDrop()
+			setMessages([...messages, `You ${activityType} a ${currentDrop.name} and gain ${currentDrop.experience} ${currentDrop.experienceType} experience.`])
 			console.log("collect drop: ", currentDrop);
 			//collectResource(currentDrop)
 			updateInventory(currentDrop)
@@ -218,6 +218,7 @@ export const Provider = props => {
 		if(check === true){
 			//update inventory
 			updateInventory(itemOutput, itemRequirements);
+			setMessages([...messages, `You ${activityType} ${itemOutput.quantity} ${itemOutput.name} and gained ${itemOutput.experience} ${itemOutput.experienceType} experience.`])
 			//updateStats(itemOutput)
 		}
 
@@ -247,6 +248,7 @@ export const Provider = props => {
 		inventory,
 		setInventory,
 		doActivity,
+		messages,
 		view,
 		setView,
 		stats,
