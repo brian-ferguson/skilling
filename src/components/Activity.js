@@ -1,6 +1,7 @@
 import  React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../context";
-import { Line } from 'rc-progress'
+// import { Line } from 'rc-progress'
+import ProgressBar from '../tools/ProgressBar'
 
 const container_styles = {
 	border: '1px solid #7D7D7D',
@@ -82,7 +83,8 @@ const Activity = (props) => {
 			<p style={{margin: '25px 0 0 10px', fontSize: 18}}>{props.name}</p>
 		</div>
 
-		<Line percent={time} strokeWidth="10" trailWidth="10" strokeColor={time === 100 ? 'green' : 'brown'} strokeLinecap="square" style={{margin: 5}} />
+		{/* <Line percent={time} strokeWidth="10" trailWidth="10" strokeColor={time === 100 ? 'green' : 'brown'} strokeLinecap="square" style={{margin: 5}} /> */}
+		<ProgressBar width={time} />
 
 		{/* Button Container */}
 		<div style={{display: 'flex', width: '100%', justifyContent: 'space-evenly'}}>
