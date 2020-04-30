@@ -7,7 +7,24 @@
             1,
             2
         ],
-        "drop": [{"item": 12, "weight": 30},{"item": 6, "weight": 10},{"item": 5, "weight": 5},{"item": 10, "weight": 1}],
+        "drop": [
+            {
+                "item": 12,
+                "weight": 30
+            },
+            {
+                "item": 6,
+                "weight": 10
+            },
+            {
+                "item": 5,
+                "weight": 5
+            },
+            {
+                "item": 10,
+                "weight": 1
+            }
+        ],
         "type": "Collect"
     },
     "2": {
@@ -18,7 +35,24 @@
             1,
             2
         ],
-        "drop": [{"item": 2, "weight": 50},{"item": 7, "weight": 15},{"item": 11, "weight": 5},{"item": 9, "weight": 1}],
+        "drop": [
+            {
+                "item": 2,
+                "weight": 50
+            },
+            {
+                "item": 7,
+                "weight": 15
+            },
+            {
+                "item": 11,
+                "weight": 5
+            },
+            {
+                "item": 9,
+                "weight": 1
+            }
+        ],
         "type": "Collect"
     },
     "3": {
@@ -30,7 +64,12 @@
             2
         ],
         "drop": 3,
-        "itemRequirements": [{"id": 2, "quantity": 1}],
+        "itemRequirements": [
+            {
+                "id": 2,
+                "quantity": 1
+            }
+        ],
         "type": "Cook"
     },
     "4": {
@@ -42,7 +81,16 @@
             2
         ],
         "drop": 4,
-        "itemRequirements": [{"id": 6, "quantity": 1}, {"id": 7, "quantity": 2}],
+        "itemRequirements": [
+            {
+                "id": 6,
+                "quantity": 1
+            },
+            {
+                "id": 7,
+                "quantity": 2
+            }
+        ],
         "type": "Refine"
     }
 }
