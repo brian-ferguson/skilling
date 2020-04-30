@@ -3,7 +3,8 @@ import React from 'react'
 const container_styles = {
     height: 20,
     width: '100%',
-    background: 'grey'
+    background: '#888', 
+    marginTop: 10
 }
 
 const progress_styles = {
