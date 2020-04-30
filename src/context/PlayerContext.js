@@ -89,13 +89,11 @@ export const Provider = props => {
 				//if the required id is not in inventory break and return false
 				if(checkInventoryIndex(requiredId) === -1){
 					return false;
-					break;
 				//if the required id is in inventory
 				}else{
 					//if the required id is in inventory but the quantity requirment is not met break and return false
 					if(checkInventory(requiredId) < requiredQuantity){
 						return false;
-						break;
 					//if the required id is in inventory and the quantity is greater than or equal to required quantity continue
 					}
 				}
