@@ -3,6 +3,7 @@ import { PlayerContext } from "../context";
 // import { Line } from 'rc-progress'
 import ProgressBar from '../tools/ProgressBar'
 import activities_json from '../json/activities.json'
+import items_json from '../json/items.json'
 
 const container_styles = {
 	border: '1px solid #7D7D7D',
@@ -32,7 +33,7 @@ const button_styles = {
 
 const Activity = (props) => {
 	const playerContext = useContext(PlayerContext);
-	const { doActivity, work, setWork, checkInventoryRequirements } = playerContext;
+	const { doActivity, work, setWork, checkInventoryRequirements, messages, setMessages } = playerContext;
 	const [time, setTime] = useState(0)
 	const [available, setAvailable] = useState(true)
 
@@ -55,7 +56,6 @@ const Activity = (props) => {
     }, [time, work, props.id, doActivity, setWork, available])
 
 	const startActivity = () => {
-		let itemRequirements = activities_json[props.id].itemRequirements
         if(!work) {
 			if(activities_json[props.id].type === 'Collect') {
 				setAvailable(false)
@@ -63,11 +63,29 @@ const Activity = (props) => {
 				setTime(divisor)
 				doActivity(props.id)
 			} else {
+
+				let itemRequirements = activities_json[props.id].itemRequirements
+				let string = ''
+				
+				for (let i = 0; i < itemRequirements.length; i++) {
+					string = string.concat(itemRequirements[i].quantity + ' ')
+					string = string.concat(items_json[itemRequirements[i].id].name)
+					if (i + 1 >= itemRequirements.length) {
+						string = string.concat(' required.')
+					} else if (i + 2 >= itemRequirements.length) {
+						string = string.concat(' and ')
+					} else {
+						string = string.concat(', ')
+					}
+				}
+
 				if(checkInventoryRequirements(itemRequirements)){
 					setAvailable(false)
 					setWork(true)
 					setTime(divisor)
 					doActivity(props.id)
+				} else {
+					setMessages([...messages, string])
 				}
 			}
 			
