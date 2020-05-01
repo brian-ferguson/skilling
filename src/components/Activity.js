@@ -37,23 +37,41 @@ const Activity = (props) => {
 	const [time, setTime] = useState(0)
 	const [available, setAvailable] = useState(true)
 
-	const divisor = 50
+	const divisor = 2
+	let itemRequirements = activities_json[props.id].itemRequirements
 
 	useEffect(() => {
         if(!available){
             const interval = setInterval(() => {
-                if(time < 100) {
-                    setTime(time + divisor)
-					doActivity(props.id)
-                } else {
-					setWork(false)
-					setAvailable(true)
-                    setTime(0)
-                }
+				if(activities_json[props.id].type === 'Collect') {
+					if(time < 100){
+						setTime(time + divisor)
+						doActivity(props.id)
+					} else {
+						setWork(false)
+						setAvailable(true)
+						setTime(0)
+					}
+				} else {
+					if(checkInventoryRequirements(itemRequirements)) {
+						if(time < 100){
+							setTime(time + divisor)
+							doActivity(props.id)
+						} else {
+							setWork(false)
+							setAvailable(true)
+							setTime(0)
+						}
+					} else {
+							setWork(false)
+							setAvailable(true)
+							setTime(0)
+						}
+				} 
             }, 1250);
             return () => clearInterval(interval);
         }
-    }, [time, work, props.id, doActivity, setWork, available])
+    }, [time, work, props.id, doActivity, setWork, available, itemRequirements, checkInventoryRequirements])
 
 	const startActivity = () => {
         if(!work) {
@@ -63,8 +81,6 @@ const Activity = (props) => {
 				setTime(divisor)
 				doActivity(props.id)
 			} else {
-
-				let itemRequirements = activities_json[props.id].itemRequirements
 				let string = ''
 				
 				for (let i = 0; i < itemRequirements.length; i++) {
