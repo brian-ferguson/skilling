@@ -184,7 +184,7 @@ export const Provider = props => {
 		//if the activity type is Collect
 		if(activityType === "Collect"){
 			let currentDrop = selectDrop()
-			setMessages([...messages, `You ${activityType} a ${currentDrop.name} and gain ${currentDrop.experience} ${currentDrop.experienceType} experience.`])
+			setMessages([...messages, `You ${activityType.toLowerCase()} a ${currentDrop.name} and gain ${currentDrop.experience} ${currentDrop.experienceType} experience.`])
 			//collectResource(currentDrop)
 			updateInventory(currentDrop)
 			updateStats(currentDrop)
@@ -199,9 +199,21 @@ export const Provider = props => {
 		let check = checkInventoryRequirements(itemRequirements)
 
 		if(check === true){
+
+			let string = ''
+				
+			for (let i = 0; i < itemRequirements.length; i++) {
+				string = string.concat(itemRequirements[i].quantity + ' ')
+				string = string.concat(items_json[itemRequirements[i].id].name)
+				if (i + 2 >= itemRequirements.length) {
+					string = string.concat(' and ')
+				} else {
+					string = string.concat(', ')
+				}
+			}
 			//update inventory
 			updateInventory(itemOutput, itemRequirements);
-			setMessages([...messages, `You ${activityType} ${itemOutput.quantity} ${itemOutput.name} and gained ${itemOutput.experience} ${itemOutput.experienceType} experience.`])
+			setMessages([...messages, `You ${activityType.toLowerCase()} ${string} gained ${itemOutput.experience} ${itemOutput.experienceType} experience.`])
 			//updateStats(itemOutput)
 		}
 
