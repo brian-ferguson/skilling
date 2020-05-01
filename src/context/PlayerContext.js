@@ -214,7 +214,7 @@ export const Provider = props => {
 			//update inventory
 			updateInventory(itemOutput, itemRequirements);
 			setMessages([...messages, `You ${activityType.toLowerCase()} ${string} gained ${itemOutput.experience} ${itemOutput.experienceType} experience.`])
-			//updateStats(itemOutput)
+			updateStats(itemOutput)
 		}
 
 				/*
