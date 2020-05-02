@@ -1,147 +1,52 @@
 {
-    "1": {
-        "name": "Palm Tree",
-        "id": 1,
-        "source": "/imgs/palmtree.svg",
+    "activities" :
+	[{
+        "id":"e929ec62-1222-4c0a-a174-2109ab7bade3",
+        "name":"Palm Tree",
+		    "source":"/imgs/palmtree.svg",
+        "type": "Collect",
         "actions": [
-            1,
-            2
-        ],
-        "drop": [
-            {
-                "id": 12,
-                "weight": 30,
-                "minimum": 1,
-                "maximum": 10
-            },
-            {
-                "id": 6,
-                "weight": 10,
-                "minimum": 1,
-                "maximum": 10
-            },
-            {
-                "id": 5,
-                "weight": 5,
-                "minimum": 1,
-                "maximum": 10
-            },
-            {
-                "id": 10,
-                "weight": 1,
-                "minimum": 1,
-                "maximum": 10
-            }
-        ],
-        "type": "Collect"
+    			"77221adc-9748-4ede-8fe9-83d2b93f66df",
+    			"cef700bb-449e-4c55-a95a-0793f82622c2"
+    		]
     },
-    "2": {
-        "name": "Shallow Water",
-        "id": 2,
-        "source": "/imgs/beach.svg",
+	{
+        "id":"e18adbc6-91cb-4c47-b59e-cddc6092829b",
+        "name":"Shallow Water",
+		    "source":"/imgs/shallowwater.svg",
+        "type": "Collect",
         "actions": [
-            1,
-            2
-        ],
-        "drop": [
-            {
-                "id": 2,
-                "weight": 50,
-                "minimum": 1,
-                "maximum": 10
-            },
-            {
-                "id": 7,
-                "weight": 15,
-                "minimum": 1,
-                "maximum": 10
-            },
-            {
-                "id": 11,
-                "weight": 5,
-                "minimum": 1,
-                "maximum": 10
-            },
-            {
-                "id": 9,
-                "weight": 1,
-                "minimum": 1,
-                "maximum": 10
-            }
-        ],
-        "type": "Collect"
+    			"3430aca0-cc8a-4703-a188-b9e07ce45d67",
+    			"d478cc95-a173-4302-af85-94e3938bff03"
+    		]
     },
-    "3": {
-        "name": "Campfire",
-        "id": 3,
-        "source": "/imgs/fire.svg",
+	{
+        "id":"adeb0427-c108-4d7e-94bc-67b1d4bc44cf",
+        "name":"Bush",
+		    "source":"/imgs/bush.svg",
+        "type": "Collect",
         "actions": [
-            1,
-            2
-        ],
-        "drop": [{"id": 3, "quantity": 1}],
-        "itemRequirements": [
-            {
-                "id": 2,
-                "quantity": 1
-            }
-        ],
+    			"77221adc-9748-4ede-8fe9-83d2b93f66df",
+    			"cef700bb-449e-4c55-a95a-0793f82622c2"
+    		]
+    },
+	{
+        "id":"3ff30485-7016-491a-b0d7-7b8314b6d97b",
+        "name":"Camp Fire",
+		    "source":"/imgs/campfire.svg",
         "type": "Refine"
     },
-    "4": {
-        "name": "Hut",
-        "id": 4,
-        "source": "/imgs/hut.svg",
-        "actions": [
-            1,
-            2
-        ],
-        "drop": [{"id": 4, "quantity": 1}],
-        "itemRequirements": [
-            {
-                "id": 6,
-                "quantity": 1
-            },
-            {
-                "id": 7,
-                "quantity": 2
-            }
-        ],
+	{
+        "id":"b3529d3b-fe4a-4265-8440-fbfb19ff1089",
+        "name":"Hut",
+		    "source":"/imgs/hut.svg",
         "type": "Refine"
     },
-    "5": {
-        "name": "Mortar and Pestle",
-        "id": 5,
-        "source": "/imgs/mortarpestle.svg",
-        "actions": [
-            1,
-            2
-        ],
-        "drop": [{"id": 14, "quantity": 10}],
-        "itemRequirements": [
-            {
-                "id": 13,
-                "quantity": 1
-            }
-        ],
+	{
+        "id":"992242bc-701d-4ca3-9aa6-9300855a800a",
+        "name":"Mortar and Pestle",
+		    "source":"/imgs/mortarpestle.svg",
         "type": "Refine"
-    },
-    "6": {
-        "name": "Bush",
-        "id": 6,
-        "source": "/imgs/bush.svg",
-        "actions": [
-            1,
-            2
-        ],
-        "drop": [
-            {
-                "id": 13,
-                "weight": 100,
-                "minimum": 1,
-                "maximum": 10
-            }
-        ],
-        "type": "Collect"
     }
+	]
 }

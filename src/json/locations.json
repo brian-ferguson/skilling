@@ -1,13 +1,24 @@
-
 {
-  "Calm Beach": {
-      "1": {},
-      "2": {},
-      "6": {}
-  },
-  "Varoko Village": {
-      "3": {},
-      "4": {},
-      "5": {}
-  }
+    "locations" :
+	[{
+        "id":"cb881ee5-06fa-4272-9fe7-2937ab4e002a",
+        "name":"Calm Beach",
+		"source":"/imgs/calmbeach.svg",
+		"type":"Collect",
+		"activities": [
+			"e929ec62-1222-4c0a-a174-2109ab7bade3",
+			"e18adbc6-91cb-4c47-b59e-cddc6092829b",
+			"adeb0427-c108-4d7e-94bc-67b1d4bc44cf"
+		]
+    }, {
+        "id":"87567dd9-6819-4a67-9309-7e858448303a",
+        "name":"Varoko Village",
+		"source":"/imgs/varokovillage.svg",
+		"type":"Collect",
+		"activities": [
+			"3ff30485-7016-491a-b0d7-7b8314b6d97b",
+			"b3529d3b-fe4a-4265-8440-fbfb19ff1089",
+			"992242bc-701d-4ca3-9aa6-9300855a800a"
+		]
+    }]
 }

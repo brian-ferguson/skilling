@@ -1,16 +1,20 @@
 {
-    "Punch": {
-        "name": "Punch",
-        "id": 1,
-        "item requirement": {},
-        "stacks": true,
-        "quantity": 1
+    "actions" :
+	[{
+        "id":"77221adc-9748-4ede-8fe9-83d2b93f66df",
+        "name":"Shake"
     },
-    "Chop": {
-        "name": "Chop",
-        "id": 2,
-        "requirement": {},
-        "stacks": true,
-        "quantity": 1
+	{
+        "id":"cef700bb-449e-4c55-a95a-0793f82622c2",
+        "name":"Swing Axe"
+    },
+	{
+        "id":"3430aca0-cc8a-4703-a188-b9e07ce45d67",
+        "name":"Collect"
+    },
+	{
+        "id":"d478cc95-a173-4302-af85-94e3938bff03",
+        "name":"Fish"
     }
+	]
 }
