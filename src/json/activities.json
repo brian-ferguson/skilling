@@ -9,20 +9,28 @@
         ],
         "drop": [
             {
-                "item": 12,
-                "weight": 30
+                "id": 12,
+                "weight": 30,
+                "minimum": 1,
+                "maximum": 10
             },
             {
-                "item": 6,
-                "weight": 10
+                "id": 6,
+                "weight": 10,
+                "minimum": 1,
+                "maximum": 10
             },
             {
-                "item": 5,
-                "weight": 5
+                "id": 5,
+                "weight": 5,
+                "minimum": 1,
+                "maximum": 10
             },
             {
-                "item": 10,
-                "weight": 1
+                "id": 10,
+                "weight": 1,
+                "minimum": 1,
+                "maximum": 10
             }
         ],
         "type": "Collect"
@@ -37,20 +45,28 @@
         ],
         "drop": [
             {
-                "item": 2,
-                "weight": 50
+                "id": 2,
+                "weight": 50,
+                "minimum": 1,
+                "maximum": 10
             },
             {
-                "item": 7,
-                "weight": 15
+                "id": 7,
+                "weight": 15,
+                "minimum": 1,
+                "maximum": 10
             },
             {
-                "item": 11,
-                "weight": 5
+                "id": 11,
+                "weight": 5,
+                "minimum": 1,
+                "maximum": 10
             },
             {
-                "item": 9,
-                "weight": 1
+                "id": 9,
+                "weight": 1,
+                "minimum": 1,
+                "maximum": 10
             }
         ],
         "type": "Collect"
@@ -63,14 +79,14 @@
             1,
             2
         ],
-        "drop": 3,
+        "drop": [{"id": 3, "quantity": 1}],
         "itemRequirements": [
             {
                 "id": 2,
                 "quantity": 1
             }
         ],
-        "type": "Cook"
+        "type": "Refine"
     },
     "4": {
         "name": "Hut",
@@ -80,7 +96,7 @@
             1,
             2
         ],
-        "drop": 4,
+        "drop": [{"id": 4, "quantity": 1}],
         "itemRequirements": [
             {
                 "id": 6,
@@ -92,5 +108,40 @@
             }
         ],
         "type": "Refine"
+    },
+    "5": {
+        "name": "Mortar and Pestle",
+        "id": 5,
+        "source": "/imgs/mortarpestle.svg",
+        "actions": [
+            1,
+            2
+        ],
+        "drop": [{"id": 14, "quantity": 10}],
+        "itemRequirements": [
+            {
+                "id": 13,
+                "quantity": 1
+            }
+        ],
+        "type": "Refine"
+    },
+    "6": {
+        "name": "Bush",
+        "id": 6,
+        "source": "/imgs/bush.svg",
+        "actions": [
+            1,
+            2
+        ],
+        "drop": [
+            {
+                "id": 13,
+                "weight": 100,
+                "minimum": 1,
+                "maximum": 10
+            }
+        ],
+        "type": "Collect"
     }
 }

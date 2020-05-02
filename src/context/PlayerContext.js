@@ -35,10 +35,12 @@ export const Provider = props => {
 		return Math.floor(Math.sqrt(exp) * 1.2);
 	};
 
+	//takes an item id and returns the id of that item in inventory
 	const checkInventoryIndex = (id) => {
 		return inventory.map(i => i.id).indexOf(id);
 	}
 
+	//takes an item id and returns the quantity of that item in inventory
 	const checkInventory = (item) => {
 		//get the index of the item in inventory
 		let inventoryIndex = checkInventoryIndex(item);
@@ -49,7 +51,6 @@ export const Provider = props => {
 		}else{
 			return inventory[inventoryIndex].quantity;
 		}
-
 	}
 
 	const checkInventoryRequirements = (list) => {
@@ -74,13 +75,23 @@ export const Provider = props => {
 		return true
 	}
 
+	//takes the id of an item and returns the item object
+	const getItemObject = (id) => {
+		for (var key in items_json) {
+			if (items_json.hasOwnProperty(key)) {
+				if(items_json[key].id === id){
+					return items_json[key]
+				}
+			}
+		}
+	}
 
 	//takes the id of an activity (integer)
 	const doActivity = (activity) => {
 
 		//methods and functions
 		//selectDrop: selects a item to drop from weighted probabilities
-		const selectDrop = () => {
+		const selectDrop = (itemList) => {
 			let loot = null;
 			for (var key in activities_json) {
 				if (activities_json.hasOwnProperty(key)) {
@@ -94,149 +105,117 @@ export const Provider = props => {
 			let weight = 0;
 
 			for(let i = 0; i < loot.length; i++) {
-
 				weight += loot[i].weight;
 				if(random <= weight){
-					return items_json[loot[i].item]
+					//calculate the quantity to return
+					let randomAmount = Math.floor(Math.random() * (loot[i].maximum - loot[i].minimum + 1) + loot[i].minimum);
+					let returnItem = [{
+						"id": loot[i].id,
+						"quantity": randomAmount
+					}];
+					return returnItem
 				}
 			}
+
+
 		}
 
 		//updateInventory
 		const updateInventory = (add, remove) => {
-
 			//instantiate copy of current inventory
 			let new_inventory =  [...inventory];
-
-
-			//if remove is undefined, add or increment the item in inventoryIndex
-			if(remove === undefined){
-
-
-				//if the item to be collected does not exist in inventory
-				if(checkInventoryIndex(add.id) === -1){
-					//add the item to the inventory
-					new_inventory.push(add);
-				//if the item to be collected does exist in inventory
-				}else{
-					//increment the item quantity in inventory
-					new_inventory[checkInventoryIndex(add.id)].quantity = new_inventory[checkInventoryIndex(add.id)].quantity + 1;
-				}
-
-
-
-			//if remove is defined (refine)
-			}else{
-
-				//add the items
-				//add the new items
-
-				if(checkInventoryIndex(add.id) === -1){
-					//add the item to the inventory
-					new_inventory.push(add);
-				//if the item to be collected does exist in inventory
-				}else{
-					//increment the item quantity in inventory
-					new_inventory[checkInventoryIndex(add.id)].quantity = new_inventory[checkInventoryIndex(add.id)].quantity + 1;
-				}
-				
-
-				//for each required item and quantity
+			//remove all the requirements
+			if(remove !== undefined){
 				for (let i = 0; i < remove.length; i++) {
-					//if the item quantity to remove results in 0 quantity in inventory
-					if(checkInventory(remove[i].id) - remove[i].quantity === 0){
-						//delete the element from inventory
+					//check if the decrementing the current quantity would result in a delete or decrement
+					if(checkInventory(remove[i].id) - remove[i].quantity !== 0){
+						//decrement the quantity of the item in inventory
+						new_inventory[checkInventoryIndex(remove[i].id)].quantity = new_inventory[checkInventoryIndex(remove[i].id)].quantity - remove[i].quantity;
+					}else{
+						//delete the item in inventory
 						let temp = [...new_inventory]
 						new_inventory = temp.filter(e => e !== temp[checkInventoryIndex(remove[i].id)])
-					//if the item quantity to remove results in 1 or more quantity in inventory
-					}else{
-						//decrement the item from inventory
-						new_inventory[checkInventoryIndex(remove[i].id)].quantity = new_inventory[checkInventoryIndex(remove[i].id)].quantity - remove[i].quantity;
 					}
 				}
-
+			//add the new items to inventory
+		}
+			//for each item to add
+			for(let j = 0; j < add.length; j++){
+				//if the item to be collected does not exist in inventory
+				if(checkInventoryIndex(add[j].id) === -1){
+					//get the item object
+					let addObject = getItemObject(add[j].id);
+					addObject.quantity = add[j].quantity;
+					//add the item to the inventory
+					new_inventory.push(addObject);
+				}else{
+					new_inventory[checkInventoryIndex(add[j].id)].quantity = new_inventory[checkInventoryIndex(add[j].id)].quantity + add[j].quantity;
+				}
 			}
 			//update state to the new inventory
 			setInventory(new_inventory);
-
 		}
 
 		//updateStats:
 		const updateStats = drop => {
-			if (stats.filter(e => e.name === drop.experienceType).length > 0) {
-				let current_experience = stats[stats.map(i => i.name).indexOf(drop.experienceType)].experience
-				let stat_index = stats.map(i => i.name).indexOf(drop.experienceType)
-				let new_stats = [...stats]
-				new_stats[stat_index].experience = current_experience + drop.experience
-				new_stats[stat_index].level = levelFormula(new_stats[stat_index].experience)
-				setStats(new_stats)
-			} else {
-				let newStat = { name: drop.experienceType, experience: drop.experience, level: 1 }
-				setStats(stats.concat(newStat))
+
+			for(let i = 0; i < drop.length; i++){
+				//get the item object by id
+				let dropObject = getItemObject(drop[i].id)
+				
+				if (stats.filter(e => e.name === dropObject.experienceType).length > 0) {
+					let current_experience = stats[stats.map(i => i.name).indexOf(dropObject.experienceType)].experience
+					let stat_index = stats.map(i => i.name).indexOf(dropObject.experienceType)
+					let new_stats = [...stats]
+					new_stats[stat_index].experience = current_experience + dropObject.experience
+					new_stats[stat_index].level = levelFormula(new_stats[stat_index].experience)
+					setStats(new_stats)
+				} else {
+					let newStat = { name: dropObject.experienceType, experience: dropObject.experience, level: 1 }
+					setStats(stats.concat(newStat))
+				}
+
 			}
+
+
 		}
 
 		//doActivity:
 
 		//get the type of the Activity
-		let activityType = items_json[activity].type;
+		let activityType = activities_json[activity].type;
 
 		//if the activity type is Collect
 		if(activityType === "Collect"){
-			let currentDrop = selectDrop()
-			setMessages([...messages, `You ${activityType.toLowerCase()} a ${currentDrop.name} and gain ${currentDrop.experience} ${currentDrop.experienceType} experience.`])
-			//collectResource(currentDrop)
-			updateInventory(currentDrop)
+
+			let currentDrop = selectDrop(activities_json[activity].drop)
 			updateStats(currentDrop)
+			setMessages([...messages, `You ${activityType.toLowerCase()} a ${currentDrop.name} and gain ${currentDrop.experience} ${currentDrop.experienceType} experience.`])
+			updateInventory(currentDrop)
 
 		//if the activity type is Refine
-	}else if (activityType === 'Refine' || 'Cook') {
+		}else if (activityType === 'Refine') {
+			//check that the item requirements are in inventory
+			let itemRequirements = activities_json[activity].itemRequirements
+			let itemOutputs = activities_json[activity].drop;
+			let check = checkInventoryRequirements(itemRequirements)
 
-		let itemRequirements = activities_json[activity].itemRequirements
-		let itemOutputID = activities_json[activity].drop;
-		let itemOutput = items_json[itemOutputID];
-		//check if the required item(s) are in inventory
-		let check = checkInventoryRequirements(itemRequirements)
-
-		if(check === true){
-
-			let string = ''
-				
-			for (let i = 0; i < itemRequirements.length; i++) {
-				string = string.concat(itemRequirements[i].quantity + ' ')
-				string = string.concat(items_json[itemRequirements[i].id].name)
-				if (i + 2 >= itemRequirements.length) {
-					string = string.concat(' and ')
-				} else {
-					string = string.concat(', ')
+			if(check){
+				let string = ''
+				for (let i = 0; i < itemRequirements.length; i++) {
+					string = string.concat(itemRequirements[i].quantity + ' ')
+					string = string.concat(items_json[itemRequirements[i].id].name)
+					if (i + 2 >= itemRequirements.length) {
+						string = string.concat(' and ')
+					} else {
+						string = string.concat(', ')
+					}
 				}
+				setMessages([...messages, `You ${activityType.toLowerCase()} ${string} gained ${itemOutputs.experience} ${itemOutputs.experienceType} experience.`])
+				updateStats(itemOutputs)
+				updateInventory(itemOutputs, itemRequirements)
 			}
-			//update inventory
-			updateInventory(itemOutput, itemRequirements);
-			setMessages([...messages, `You ${activityType.toLowerCase()} ${string} gained ${itemOutput.experience} ${itemOutput.experienceType} experience.`])
-			updateStats(itemOutput)
 		}
-
-				/*
-				//get the item requirement to refine
-				let itemRequiredID = activities_json[activity].itemRequirement;
-				let itemRequired = items_json[itemRequiredID];
-
-				let itemOutput = items_json[itemOutputID];
-
-				//if the required item exists in inventory
-				if(checkInventoryIndex(itemRequiredID) !== -1){
-					updateInventory(itemOutput, itemRequired);
-					updateStats(itemOutput)
-				}
-				*/
-			}
-
-
-
-		//if the activity type is Craft
-
-
 	};
 
 	const playerContext = {

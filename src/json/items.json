@@ -15,7 +15,7 @@
         "source": "/imgs/fish.svg",
         "stacks": true,
         "quantity": 1,
-        "experienceType": "Fishing",
+        "experienceType": "Gathering",
         "experience": 1,
         "type": "Collect"
     },
@@ -47,7 +47,7 @@
         "source": "/imgs/coconut.svg",
         "stacks": true,
         "quantity": 1,
-        "experienceType": "Woodcutting",
+        "experienceType": "Gathering",
         "experience": 1,
         "type": "Collect"
     },
@@ -57,7 +57,7 @@
         "source": "/imgs/branch.svg",
         "stacks": true,
         "quantity": 1,
-        "experienceType": "Woodcutting",
+        "experienceType": "Gathering",
         "experience": 1,
         "type": "Collect"
     },
@@ -67,7 +67,7 @@
         "source": "/imgs/rock.svg",
         "stacks": true,
         "quantity": 1,
-        "experienceType": "Fishing",
+        "experienceType": "Gathering",
         "experience": 1,
         "type": "Collect"
     },
@@ -77,7 +77,7 @@
         "source": "/imgs/shell.svg",
         "stacks": true,
         "quantity": 1,
-        "experienceType": "Fishing",
+        "experienceType": "Gathering",
         "experience": 1,
         "type": "Collect"
     },
@@ -87,7 +87,7 @@
         "source": "/imgs/key.svg",
         "stacks": true,
         "quantity": 1,
-        "experienceType": "Fishing",
+        "experienceType": "Treasure Finding",
         "experience": 1,
         "type": "Collect"
     },
@@ -97,7 +97,7 @@
         "source": "/imgs/egg.svg",
         "stacks": true,
         "quantity": 1,
-        "experienceType": "Woodcutting",
+        "experienceType": "Gathering",
         "experience": 1,
         "type": "Collect"
     },
@@ -107,7 +107,7 @@
         "source": "/imgs/flint.svg",
         "stacks": true,
         "quantity": 1,
-        "experienceType": "Fishing",
+        "experienceType": "Gathering",
         "experience": 1,
         "type": "Collect"
     },
@@ -117,8 +117,28 @@
         "source": "/imgs/palmleaf.svg",
         "stacks": true,
         "quantity": 1,
-        "experienceType": "Woodcutting",
+        "experienceType": "Gathering",
         "experience": 1,
         "type": "Collect"
+    },
+    "13": {
+        "name": "Coffee Branch",
+        "id": 13,
+        "source": "/imgs/coffeebranch.svg",
+        "stacks": true,
+        "quantity": 1,
+        "experienceType": "Gathering",
+        "experience": 1,
+        "type": "Collect"
+    },
+    "14": {
+        "name": "Coffee Beans",
+        "id": 14,
+        "source": "/imgs/coffeebeans.svg",
+        "stacks": true,
+        "quantity": 1,
+        "experienceType": "Grinding",
+        "experience": 1,
+        "type": "Refine"
     }
 }

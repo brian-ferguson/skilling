@@ -67,7 +67,7 @@ const Activity = (props) => {
 							setAvailable(true)
 							setTime(0)
 						}
-				} 
+				}
             }, 1250);
             return () => clearInterval(interval);
         }
@@ -82,7 +82,7 @@ const Activity = (props) => {
 				doActivity(props.id)
 			} else {
 				let string = ''
-				
+
 				for (let i = 0; i < itemRequirements.length; i++) {
 					string = string.concat(itemRequirements[i].quantity + ' ')
 					string = string.concat(items_json[itemRequirements[i].id].name)
@@ -104,7 +104,7 @@ const Activity = (props) => {
 					setMessages([...messages, string])
 				}
 			}
-			
+
         }
     }
 
@@ -136,7 +136,7 @@ const Activity = (props) => {
 		<div style={{display: 'flex', width: '100%', justifyContent: 'space-evenly'}}>
 
 			{/* Button */}
-			{!available 
+			{!available
 			? <button id={props.id} onClick={cancelActivity} style={{...button_styles, background: 'red'}}>Stop</button>
 			: <button id={props.id} onClick={startActivity} style={button_styles}>{props.type}</button>
 			}
