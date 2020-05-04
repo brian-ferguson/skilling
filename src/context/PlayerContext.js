@@ -211,43 +211,42 @@ export const Provider = props => {
 
 			//update state to the new inventory
 			setInventory(new_inventory)
+
 		}
 
 		//updateStats:
 		const updateStats = drop => {
 
-			for(let i = 0; i < drop.length; i++){
-				//get the item object by id
-				let dropObject = getObject(drop[i].id, items_json)
-
-				if (stats.filter(e => e.name === dropObject.experienceType).length > 0) {
-					let current_experience = stats[stats.map(i => i.name).indexOf(dropObject.experienceType)].experience
-					let stat_index = stats.map(i => i.name).indexOf(dropObject.experienceType)
+				if (stats.filter(e => e.name === drop).length > 0) {
+					let current_experience = stats[stats.map(i => i.name).indexOf(drop)].experience
+					let stat_index = stats.map(i => i.name).indexOf(drop)
 					let new_stats = [...stats]
-					new_stats[stat_index].experience = current_experience + dropObject.experience
+					new_stats[stat_index].experience = current_experience + 1
 					new_stats[stat_index].level = levelFormula(new_stats[stat_index].experience)
 					setStats(new_stats)
 				} else {
-					let newStat = { name: dropObject.experienceType, experience: dropObject.experience, level: 1 }
+					let newStat = { name: drop, experience: 1, level: 1 }
 					setStats(stats.concat(newStat))
 				}
-			}
 		}
 
 		//doActivity
 
 		let lootList = null
+		let activityId = null;
+		let actionId = null;
 
 		//get the loot list object of the activity and objects
 		for(let i=0; i<loots_json["loots"].length; i++){
 			//get the activity and action id of each loop
-			let activityId = loots_json["loots"][i].activityId
-			let actionId = loots_json["loots"][i].actionId
+			activityId = loots_json["loots"][i].activityId
+			actionId = loots_json["loots"][i].actionId
 
 			//if the activity and action ids passed from click are equal to the respective loots foreign keys
 			if(activityId === activity && actionId === action){
 				//get the loot list objects
 			  lootList = loots_json["loots"][i].loot
+				break
 			}
 		}
 
@@ -256,9 +255,11 @@ export const Provider = props => {
 
 		//get the action object from the id passed to doActivity
 		let actionObject = getObject(action, actions_json["actions"])
-
+		let activityObject = getObject(activityId, activities_json["activities"])
 		//update inventory
-		updateInventory(currentDrop, actionObject.itemRequirements);
+		updateInventory(currentDrop, actionObject.itemRequirements)
+		//update the set
+		updateStats(activityObject.type)
 
 	};
 
