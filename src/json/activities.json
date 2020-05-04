@@ -1,72 +1,147 @@
 {
-    "activities" :
-	[
-    {
-        "id":"e929ec62-1222-4c0a-a174-2109ab7bade3",
-        "name":"Palm Tree",
-		    "source":"/imgs/activities/palmtree.svg",
-        "type": "Collect",
+    "1": {
+        "name": "Palm Tree",
+        "id": 1,
+        "source": "/imgs/palmtree.svg",
         "actions": [
-    			"77221adc-9748-4ede-8fe9-83d2b93f66df",
-    			"cef700bb-449e-4c55-a95a-0793f82622c2"
-    		]
+            1,
+            2
+        ],
+        "drop": [
+            {
+                "id": 12,
+                "weight": 30,
+                "minimum": 1,
+                "maximum": 10
+            },
+            {
+                "id": 6,
+                "weight": 10,
+                "minimum": 1,
+                "maximum": 10
+            },
+            {
+                "id": 5,
+                "weight": 5,
+                "minimum": 1,
+                "maximum": 10
+            },
+            {
+                "id": 10,
+                "weight": 1,
+                "minimum": 1,
+                "maximum": 10
+            }
+        ],
+        "type": "Collect"
     },
-	  {
-        "id":"e18adbc6-91cb-4c47-b59e-cddc6092829b",
-        "name":"Shallow Water",
-		    "source":"/imgs/activities/shallowwater.svg",
-        "type": "Collect",
+    "2": {
+        "name": "Shallow Water",
+        "id": 2,
+        "source": "/imgs/beach.svg",
         "actions": [
-    			"3430aca0-cc8a-4703-a188-b9e07ce45d67",
-    			"d478cc95-a173-4302-af85-94e3938bff03"
-    		]
+            1,
+            2
+        ],
+        "drop": [
+            {
+                "id": 2,
+                "weight": 50,
+                "minimum": 1,
+                "maximum": 10
+            },
+            {
+                "id": 7,
+                "weight": 15,
+                "minimum": 1,
+                "maximum": 10
+            },
+            {
+                "id": 11,
+                "weight": 5,
+                "minimum": 1,
+                "maximum": 10
+            },
+            {
+                "id": 9,
+                "weight": 1,
+                "minimum": 1,
+                "maximum": 10
+            }
+        ],
+        "type": "Collect"
     },
-	  {
-        "id":"adeb0427-c108-4d7e-94bc-67b1d4bc44cf",
-        "name":"Bush",
-		    "source":"/imgs/activities/bush.svg",
-        "type": "Collect",
+    "3": {
+        "name": "Campfire",
+        "id": 3,
+        "source": "/imgs/fire.svg",
         "actions": [
-    			"77221adc-9748-4ede-8fe9-83d2b93f66df",
-    			"cef700bb-449e-4c55-a95a-0793f82622c2"
-    		]
+            1,
+            2
+        ],
+        "drop": [{"id": 3, "quantity": 1}],
+        "itemRequirements": [
+            {
+                "id": 2,
+                "quantity": 1
+            }
+        ],
+        "type": "Refine"
     },
-	  {
-        "id":"3ff30485-7016-491a-b0d7-7b8314b6d97b",
-        "name":"Camp Fire",
-		    "source":"/imgs/activities/campfire.svg",
-        "type": "Refine",
+    "4": {
+        "name": "Hut",
+        "id": 4,
+        "source": "/imgs/hut.svg",
         "actions": [
-    			"db6314d7-e40c-46d8-a8b0-1291b3bd4769",
-    			"300852ce-35c1-46fa-87d0-f0fa40e3540f"
-    		]
+            1,
+            2
+        ],
+        "drop": [{"id": 4, "quantity": 1}],
+        "itemRequirements": [
+            {
+                "id": 6,
+                "quantity": 1
+            },
+            {
+                "id": 7,
+                "quantity": 2
+            }
+        ],
+        "type": "Refine"
     },
-	  {
-        "id":"b3529d3b-fe4a-4265-8440-fbfb19ff1089",
-        "name":"Hut",
-		    "source":"/imgs/activities/hut.svg",
-        "type": "Refine",
+    "5": {
+        "name": "Mortar and Pestle",
+        "id": 5,
+        "source": "/imgs/mortarpestle.svg",
         "actions": [
-    			"b385d6f5-608c-43ab-a5c3-64efb1d948aa",
-          "78b672af-b035-4b7f-99dc-b732ade736da"
-    		]
+            1,
+            2
+        ],
+        "drop": [{"id": 14, "quantity": 10}],
+        "itemRequirements": [
+            {
+                "id": 13,
+                "quantity": 1
+            }
+        ],
+        "type": "Refine"
     },
-	  {
-        "id":"992242bc-701d-4ca3-9aa6-9300855a800a",
-        "name":"Mortar and Pestle",
-		    "source":"/imgs/activities/mortarandpestle.svg",
-        "type": "Refine",
+    "6": {
+        "name": "Bush",
+        "id": 6,
+        "source": "/imgs/bush.svg",
         "actions": [
-    			"221092ed-dd53-4256-a5a1-6f544ab76c12"
-    		]
-    },
-    {
-        "id":"81115762-48fe-468d-a1fa-9ef55e789880",
-        "name":"Refinery",
-		    "source":"/imgs/activities/refinery.svg",
-        "type": "Refine",
-        "actions": [
-    			"07775edc-a8ec-4ae8-9b5f-b3f57b2ba335"
-    		]
+            1,
+            2
+        ],
+        "drop": [
+            {
+                "id": 13,
+                "weight": 100,
+                "minimum": 1,
+                "maximum": 10
+            }
+        ],
+        "type": "Collect"
     }
-]}
+}

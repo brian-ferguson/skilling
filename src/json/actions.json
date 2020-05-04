@@ -1,52 +1,16 @@
 {
-    "actions" :
-	[
-    {
-        "id":"77221adc-9748-4ede-8fe9-83d2b93f66df",
-        "name":"Shake"
+    "Punch": {
+        "name": "Punch",
+        "id": 1,
+        "item requirement": {},
+        "stacks": true,
+        "quantity": 1
     },
-	  {
-        "id":"cef700bb-449e-4c55-a95a-0793f82622c2",
-        "name":"Swing Hatchet",
-        "itemRequirements":[{"id": "afa15b8e-06f2-43d1-b3f5-25cea761a84e", "quantity": 1}]
-    },
-	  {
-        "id":"3430aca0-cc8a-4703-a188-b9e07ce45d67",
-        "name":"Collect"
-    },
-	  {
-        "id":"d478cc95-a173-4302-af85-94e3938bff03",
-        "name":"Fish",
-        "itemRequirements":[{"id": "120f227e-291c-4246-97b6-e1b56147cf46", "quantity": 1}]
-    },
-    {
-        "id":"db6314d7-e40c-46d8-a8b0-1291b3bd4769",
-        "name":"Cook Minnow",
-        "itemRequirements":[{"id": "fd8d65ee-bf47-47f5-87f8-f14b12213694", "quantity": 1}]
-    },
-    {
-        "id":"300852ce-35c1-46fa-87d0-f0fa40e3540f",
-        "name":"Cook Egg",
-        "itemRequirements":[{"id": "d3ac0e97-3d27-4ac4-b426-792f41c0370c", "quantity": 1}]
-    },
-    {
-        "id":"221092ed-dd53-4256-a5a1-6f544ab76c12",
-        "name":"Grind Coffee",
-        "itemRequirements":[{"id": "88f0899a-c25d-408a-b10e-a7d14a996046", "quantity": 1}]
-    },
-    {
-        "id":"b385d6f5-608c-43ab-a5c3-64efb1d948aa",
-        "name":"Craft Fishing Rod",
-        "itemRequirements":[{"id": "86362fea-cefc-4b60-8470-8621511e5991", "quantity": 1}, {"id": "2b5a67a2-af89-494b-8317-c63dec716733", "quantity": 1}]
-    },
-    {
-        "id":"78b672af-b035-4b7f-99dc-b732ade736da",
-        "name":"Craft Hatchet",
-        "itemRequirements":[{"id": "86362fea-cefc-4b60-8470-8621511e5991", "quantity": 1}, {"id": "ad321a53-075b-4dbe-9d65-9c950e5bd5eb", "quantity": 5}]
-    },
-    {
-        "id":"07775edc-a8ec-4ae8-9b5f-b3f57b2ba335",
-        "name":"Refine Palm Branch",
-        "itemRequirements":[{"id": "167819a8-7f48-4a00-87cc-2b77d7bdc87f", "quantity": 1}]
+    "Chop": {
+        "name": "Chop",
+        "id": 2,
+        "requirement": {},
+        "stacks": true,
+        "quantity": 1
     }
-	]}
+}
