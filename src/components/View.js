@@ -23,8 +23,8 @@ const chat_span_styles = {
 }
 
 const chat_title_styles = {
-	borderTop: '2px solid #333', 
-	borderBottom: '2px solid #333', 
+	borderTop: '2px solid #333',
+	borderBottom: '2px solid #333',
 	textAlign: 'center',
 	userSelect: 'none',
 	cursor: 'pointer',
@@ -34,7 +34,7 @@ const chat_title_styles = {
 
 const View = () => {
 	const playerContext = useContext(PlayerContext);
-	const { locationActivities, messages } = playerContext
+	const { locationActivities, locationActions, messages } = playerContext
 	const [chat, setChat] = useState([])
 	const [visible, setVisible] = useState(true)
 
@@ -44,11 +44,13 @@ const View = () => {
 
 	return <div style={{flexGrow: 2, background: '#C0FFEE', display: 'flex', flexDirection: 'column'}}>
 		<div style={activity_styles}>
-			{locationActivities.map((e, i) => <Activity key={i} name={e.name} source={e.source} dropClicks={10} drop={e.drop} id={e.id} type={e.type} />)}
+
+		{locationActivities.map((e, i) => <Activity key={i} id={e.id} name={e.name} source={e.source} actions={locationActions[i]} />)}
+
 		</div>
 
 		<span style={chat_title_styles} onClick={() => setVisible(!visible)}>System Logs</span>
-		
+
 		{visible && <div style={chat_styles}>
 			{chat.map((e, i) => <span style={chat_span_styles} key={i}>{e}</span>)}
 		</div>}
