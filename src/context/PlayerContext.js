@@ -6,11 +6,11 @@ import items_json from '../json/items.json'
 import actions_json from '../json/actions.json'
 import loots_json from '../json/loots.json'
 
-export const Context = createContext({});
+export const Context = createContext({})
 
 export const Provider = props => {
 
-	const [locations, setLocations] = useState([]);
+	const [locations, setLocations] = useState([])
 	const [locationActivities, setLocationActivities] = useState([])
 	const [locationActions, setLocationActions] = useState([])
 	const [view, setView] = useState("cb881ee5-06fa-4272-9fe7-2937ab4e002a")
@@ -22,86 +22,88 @@ export const Provider = props => {
 	useEffect(() => {
 
 		//set the locations state object (restricted based on skill amount in a category)
-		setLocations(locations_json["locations"]);
+		setLocations(locations_json["locations"])
 		//get the game object of the current view location
-		let currentLocation = getObject(view, locations_json["locations"]);
+		let currentLocation = getObject(view, locations_json["locations"])
 		//get the activities of the current view location
-		let currentLocationActivities = currentLocation.activities;
+		let currentLocationActivities = currentLocation.activities
 		//instantiate an array to hold the activity objects of the current view location
-		let activitiesObjects = [];
+		let activitiesObjects = []
 
 		//for each activity id of the current view location
 		for(let i=0; i<currentLocationActivities.length; i++){
 			//get the activity object
-			let activityObject = getObject(currentLocationActivities[i], activities_json["activities"]);
+			let activityObject = getObject(currentLocationActivities[i], activities_json["activities"])
 			//add the activity object to activitiesObjects
-			activitiesObjects.push(activityObject);
+			activitiesObjects.push(activityObject)
 		}
 
 		//if the list of current location activities is not 0
 		if(activitiesObjects.length !== 0){
 			//update the current location activities state
-			setLocationActivities(activitiesObjects);
+			setLocationActivities(activitiesObjects)
 		}
 
 		//instantiate an array to hold the available actions per activity
-		let currentLocationActions = [];
+		let currentLocationActions = []
 
 		//iterate through the list of activities at the current view location
 		for(let j=0; j<activitiesObjects.length; j++){
 
 			//get the actions of the activity
-			let activityActions = activitiesObjects[j].actions;
+			let activityActions = activitiesObjects[j].actions
 			//instantiate an array to hold the actions with item requirements met
-			let availableActivityActions = [];
+			let availableActivityActions = []
 
 			//for each action in the activity actions
 			for(let k=0; k<activityActions.length; k++){
 				//get the action object
-				let actionObject = getObject(activityActions[k], actions_json["actions"]);
+				let actionObject = getObject(activityActions[k], actions_json["actions"])
 
 				//if the action has item requirements
 				if(actionObject.itemRequirements){
 
 					if(checkInventoryRequirements(actionObject.itemRequirements) === true){
-						availableActivityActions.push(actionObject);
+						availableActivityActions.push(actionObject)
 					}
 
 				}else{
-					availableActivityActions.push(actionObject);
+					availableActivityActions.push(actionObject)
 				}
+
 			}
 
 			//if the list of current location actions is not 0
 			if(availableActivityActions){
-				currentLocationActions.push(availableActivityActions);
+				currentLocationActions.push(availableActivityActions)
 			}
+
 		}
 
 		//if the list of current location actions is not 0
 		if(currentLocationActions.length !== 0){
-			setLocationActions(currentLocationActions);
+			setLocationActions(currentLocationActions)
 		}
 
 	}, [view])
 
 	//takes an amount of experience and returns the equivalent level amount
 	const levelFormula = (exp) => {
-		return Math.floor(Math.sqrt(exp) * 1.2);
-	};
+		return Math.floor(Math.sqrt(exp) * 1.2)
+	}
 
 	//takes an item id and returns the id of that item in inventory
 	const checkInventoryIndex = (id) => {
-		return inventory.map(i => i.id).indexOf(id);
+		return inventory.map(i => i.id).indexOf(id)
 	}
 
 	//takes an item id and returns the quantity of that item in inventory
 	const checkInventory = (item) => {
-		let inventoryIndex = checkInventoryIndex(item);
+		let inventoryIndex = checkInventoryIndex(item)
 		if(inventoryIndex === -1){
 			return 0
 		}else{
-			return inventory[inventoryIndex].quantity;
+			return inventory[inventoryIndex].quantity
 		}
 	}
 
@@ -110,16 +112,16 @@ export const Provider = props => {
 		//for each element in the list of item requirements
 		for (let i = 0; i < list.length; i++) {
 			//get the required id and quantity
-			let requiredId = list[i].id;
-			let requiredQuantity = list[i].quantity;
+			let requiredId = list[i].id
+			let requiredQuantity = list[i].quantity
 			//if the required id is not in inventory break and return false
 			if(checkInventoryIndex(requiredId) === -1){
-				return false;
+				return false
 			//if the required id is in inventory
 			}else{
 				//if the required id is in inventory but the quantity requirment is not met break and return false
 				if(checkInventory(requiredId) < requiredQuantity){
-					return false;
+					return false
 				//if the required id is in inventory and the quantity is greater than or equal to required quantity continue
 				}
 			}
@@ -144,18 +146,18 @@ export const Provider = props => {
 		//methods and functions
 		//selectDrop: selects a item to drop from weighted probabilities
 		const selectDrop = (loot) => {
-			let weightSum = loot.reduce((a, b) => a + (b['weight'] || 0), 0);
-			let random = Math.floor(Math.random() * (weightSum - 0 + 1) + 0);
-			let weight = 0;
+			let weightSum = loot.reduce((a, b) => a + (b['weight'] || 0), 0)
+			let random = Math.floor(Math.random() * (weightSum - 0 + 1) + 0)
+			let weight = 0
 			for(let i = 0; i < loot.length; i++) {
-				weight += loot[i].weight;
+				weight += loot[i].weight
 				if(random <= weight){
 					//calculate the quantity to return
-					let randomAmount = Math.floor(Math.random() * (loot[i].maximum - loot[i].minimum + 1) + loot[i].minimum);
+					let randomAmount = Math.floor(Math.random() * (loot[i].maximum - loot[i].minimum + 1) + loot[i].minimum)
 					let returnItem = [{
 						"id": loot[i].id,
 						"quantity": randomAmount
-					}];
+					}]
 					return returnItem
 				}
 			}
@@ -165,38 +167,42 @@ export const Provider = props => {
 		const updateInventory = (add, remove) => {
 
 			//instantiate copy of current inventory
-			let new_inventory =  [...inventory];
-			/*
+			let new_inventory =  [...inventory]
+
 			//remove all the requirements
 			if(remove !== undefined){
 				for (let i = 0; i < remove.length; i++) {
 					//check if the decrementing the current quantity would result in a delete or decrement
 					if(checkInventory(remove[i].id) - remove[i].quantity !== 0){
 						//decrement the quantity of the item in inventory
-						new_inventory[checkInventoryIndex(remove[i].id)].quantity = new_inventory[checkInventoryIndex(remove[i].id)].quantity - remove[i].quantity;
+						new_inventory[checkInventoryIndex(remove[i].id)].quantity = new_inventory[checkInventoryIndex(remove[i].id)].quantity - remove[i].quantity
 					}else{
 						//delete the item in inventory
 						let temp = [...new_inventory]
 						new_inventory = temp.filter(e => e !== temp[checkInventoryIndex(remove[i].id)])
 					}
 				}
-		}*/
+		}
 			//add the new items to inventory
 			//for each item to add
 			for(let j = 0; j < add.length; j++){
 				//if the item to be collected does not exist in inventory
 				if(checkInventoryIndex(add[j].id) === -1){
 					//get the item object
-					let addObject = getObject(add[j].id, items_json["items"]);
-					addObject.quantity = add[j].quantity;
+					let addObject = getObject(add[j].id, items_json["items"])
+					addObject.quantity = add[j].quantity
 					//add the item to the inventory
-					new_inventory.push(addObject);
+					new_inventory.push(addObject)
 				}else{
-					new_inventory[checkInventoryIndex(add[j].id)].quantity = new_inventory[checkInventoryIndex(add[j].id)].quantity + add[j].quantity;
+					console.log("add qty: ", add[j].quantity);
+					let temp = [...new_inventory]
+					temp[checkInventoryIndex(add[j].id)].quantity = temp[checkInventoryIndex(add[j].id)].quantity + add[j].quantity
+					//new_inventory[checkInventoryIndex(add[j].id)].quantity = new_inventory[checkInventoryIndex(add[j].id)].quantity + add[j].quantity
+					new_inventory = temp;
 				}
 			}
 			//update state to the new inventory
-			setInventory(new_inventory);
+			setInventory(new_inventory)
 		}
 
 		//updateStats:
@@ -220,32 +226,34 @@ export const Provider = props => {
 			}
 		}
 
-		let lootList = null;
+		//doActivity
+
+		let lootList = null
 
 		//get the loot list object of the activity and objects
 		for(let i=0; i<loots_json["loots"].length; i++){
 			//get the activity and action id of each loop
-			let activityId = loots_json["loots"][i].activityId;
-			let actionId = loots_json["loots"][i].actionId;
+			let activityId = loots_json["loots"][i].activityId
+			let actionId = loots_json["loots"][i].actionId
 
 			//if the activity and action ids passed from click are equal to the respective loots foreign keys
 			if(activityId === activity && actionId === action){
 				//get the loot list objects
-			  lootList = loots_json["loots"][i].loot;
+			  lootList = loots_json["loots"][i].loot
 			}
 		}
 
 		//get the current drop and quantity
 		let currentDrop = selectDrop(lootList)
 		//get the item requirement list to remove
-		console.log("current drop: ", currentDrop);
+		console.log("current drop: ", currentDrop)
 
 		//get the action object from the id passed to doActivity
-		let actionObject = getObject(action, actions_json["actions"]);
-		console.log("action object: ", actionObject);
+		let actionObject = getObject(action, actions_json["actions"])
+		console.log("action object: ", actionObject)
 
 		//update inventory
-		updateInventory(currentDrop);
+		updateInventory(currentDrop, actionObject.itemRequirements)
 
 	};
 
@@ -268,24 +276,24 @@ export const Provider = props => {
 		locationActions,
 		setLocationActions
 
-	};
+	}
 
 	return <Context.Provider value={playerContext}>{props.children}</Context.Provider>
 
-};
+}
 
 //consumer
-export const { Consumer } = Context;
+export const { Consumer } = Context
 
 //proptype validation
 Provider.propTypes = {
   inventory: PropTypes.array,
   items: PropTypes.array,
 	locations: PropTypes.array,
-};
+}
 
 Provider.defaultProps = {
   inventory: [],
   items: [],
 	locations: [],
-};
+}
