@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext } from "react"
 import PropTypes from "prop-types"
+import { levelFormula } from '../tools/index'
 import locations_json from '../json/locations.json'
 import activities_json from '../json/activities.json'
 import items_json from '../json/items.json'
