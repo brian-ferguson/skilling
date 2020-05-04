@@ -19,17 +19,8 @@ export const Provider = props => {
 	const [inventory, setInventory] = useState([])
 	const [stats, setStats] = useState([])
 
-	useEffect(() => {
-
-		generateLocations(view);
-
-	}, [view])
-
-	useEffect(() => {
-
-		generateLocations(view);
-
-	},[inventory])
+	// eslint-disable-next-line
+	useEffect(() => generateLocations(view), [view, inventory])
 
 	const generateLocations = (view) => {
 		//set the locations state object (restricted based on skill amount in a category)
