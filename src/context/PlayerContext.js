@@ -21,6 +21,17 @@ export const Provider = props => {
 
 	useEffect(() => {
 
+		generateLocations(view);
+
+	}, [view])
+
+	useEffect(() => {
+		
+		generateLocations(view);
+
+	},[inventory])
+
+	const generateLocations = (view) => {
 		//set the locations state object (restricted based on skill amount in a category)
 		setLocations(locations_json["locations"])
 		//get the game object of the current view location
@@ -84,8 +95,7 @@ export const Provider = props => {
 		if(currentLocationActions.length !== 0){
 			setLocationActions(currentLocationActions)
 		}
-
-	}, [view])
+	}
 
 	//takes an amount of experience and returns the equivalent level amount
 	const levelFormula = (exp) => {
@@ -253,7 +263,7 @@ export const Provider = props => {
 		console.log("action object: ", actionObject)
 
 		//update inventory
-		updateInventory(currentDrop, actionObject.itemRequirements)
+		updateInventory(currentDrop, actionObject.itemRequirements);
 
 	};
 
