@@ -21,92 +21,61 @@ export const Provider = props => {
 
 	useEffect(() => {
 
-		//initialize an array to hold the available location objects
-		let currentLocations = [];
-		//initialize an array to hold the current view location activities
-		let currentLocationActivities = [];
-		//initialize an array to hold the current location activity actions
-		let currentLocationActions = [];
+		//set the locations state object (restricted based on skill amount in a category)
+		setLocations(locations_json["locations"]);
+		//get the game object of the current view location
+		let currentLocation = getObject(view, locations_json["locations"]);
+		//get the activities of the current view location
+		let currentLocationActivities = currentLocation.activities;
+		//instantiate an array to hold the activity objects of the current view location
+		let activitiesObjects = [];
 
-		//iterate through the game locations
-		for(let i=0; i<locations_json["locations"].length; i++){
-			//add the location object at the current index to currentLocations
-			currentLocations.push(locations_json["locations"][i]);
-
-			//if the location object at the current index id is equal to the view id
-			if(locations_json["locations"][i].id === view){
-
-				//iterate through the activities of the current view location
-				for(let j=0; j<locations_json["locations"][i].activities.length; j++){
-
-					//iterate through the activity objects at the view location
-					for(let k=0; k<activities_json["activities"].length; k++){
-
-						//if the id of the activity of the current view location is equal to the id the game object activity
-						if(activities_json["activities"][k].id === locations_json["locations"][i].activities[j]){
-
-							//instantiate an array to hold the actions of each activity
-							let currentActivityActions = [];
-
-							//add the activity to the list of location activities
-							currentLocationActivities.push(activities_json["activities"][k]);
-
-							//iterate through the the activity actions
-							for(let l=0; l<activities_json["activities"][k].actions.length; l++){
-
-								//iterate through the actions
-								for(let m=0; m<actions_json["actions"].length; m++){
-									//if the activity action id and the action id are equal
-									if(actions_json["actions"][m].id === activities_json["activities"][k].actions[l]){
-
-										if(actions_json["actions"][m].itemRequirements !== undefined){
-											//check if the item requirements are met
-											if(checkInventoryRequirements(actions_json["actions"][m].itemRequirements)){
-												//currentActivityActions.push(actions_json["actions"][m]);
-											}
-											currentActivityActions.push(actions_json["actions"][m]);
-
-										}else{
-											console.log("undefined");
-											//add the action
-											//currentActivityActions.push(actions_json["actions"][m]);
-										}
-
-									}//ends if activity and action equal ids
-
-
-
-								}//ends json action iteration
-
-
-
-							}
-
-							//add the current activity actions to currentLocationActions
-							if(currentActivityActions.length !== 0){
-								currentLocationActions.push(currentActivityActions);
-							}
-
-						}
-
-
-
-
-					}
-				}
-			}//equal view id
-		}
-
-		//if the list of locations is not 0
-		if(currentLocations.length !== 0){
-			//update the locations state
-			setLocations(currentLocations);
+		//for each activity id of the current view location
+		for(let i=0; i<currentLocationActivities.length; i++){
+			//get the activity object
+			let activityObject = getObject(currentLocationActivities[i], activities_json["activities"]);
+			//add the activity object to activitiesObjects
+			activitiesObjects.push(activityObject);
 		}
 
 		//if the list of current location activities is not 0
-		if(currentLocationActivities.length !== 0){
+		if(activitiesObjects.length !== 0){
 			//update the current location activities state
-			setLocationActivities(currentLocationActivities);
+			setLocationActivities(activitiesObjects);
+		}
+
+		//instantiate an array to hold the available actions per activity
+		let currentLocationActions = [];
+
+		//iterate through the list of activities at the current view location
+		for(let j=0; j<activitiesObjects.length; j++){
+
+			//get the actions of the activity
+			let activityActions = activitiesObjects[j].actions;
+			//instantiate an array to hold the actions with item requirements met
+			let availableActivityActions = [];
+
+			//for each action in the activity actions
+			for(let k=0; k<activityActions.length; k++){
+				//get the action object
+				let actionObject = getObject(activityActions[k], actions_json["actions"]);
+
+				//if the action has item requirements
+				if(actionObject.itemRequirements){
+
+					if(checkInventoryRequirements(actionObject.itemRequirements) === true){
+						availableActivityActions.push(actionObject);
+					}
+
+				}else{
+					availableActivityActions.push(actionObject);
+				}
+			}
+
+			//if the list of current location actions is not 0
+			if(availableActivityActions){
+				currentLocationActions.push(availableActivityActions);
+			}
 		}
 
 		//if the list of current location actions is not 0
