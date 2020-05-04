@@ -206,9 +206,10 @@ export const Provider = props => {
 				}else{
 					console.log("add qty: ", add[j].quantity);
 					let temp = [...new_inventory]
-					temp[checkInventoryIndex(add[j].id)].quantity = temp[checkInventoryIndex(add[j].id)].quantity + add[j].quantity
-					//new_inventory[checkInventoryIndex(add[j].id)].quantity = new_inventory[checkInventoryIndex(add[j].id)].quantity + add[j].quantity
-					new_inventory = temp;
+					if(temp[checkInventoryIndex(add[j].id)]) {
+						temp[checkInventoryIndex(add[j].id)].quantity = temp[checkInventoryIndex(add[j].id)].quantity + add[j].quantity
+						new_inventory = temp;
+					}
 				}
 			}
 			//update state to the new inventory
