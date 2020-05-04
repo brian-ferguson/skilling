@@ -26,7 +26,7 @@ export const Provider = props => {
 	}, [view])
 
 	useEffect(() => {
-		
+
 		generateLocations(view);
 
 	},[inventory])
@@ -179,20 +179,6 @@ export const Provider = props => {
 			//instantiate copy of current inventory
 			let new_inventory =  [...inventory]
 
-			//remove all the requirements
-			if(remove !== undefined){
-				for (let i = 0; i < remove.length; i++) {
-					//check if the decrementing the current quantity would result in a delete or decrement
-					if(checkInventory(remove[i].id) - remove[i].quantity !== 0){
-						//decrement the quantity of the item in inventory
-						new_inventory[checkInventoryIndex(remove[i].id)].quantity = new_inventory[checkInventoryIndex(remove[i].id)].quantity - remove[i].quantity
-					}else{
-						//delete the item in inventory
-						let temp = [...new_inventory]
-						new_inventory = temp.filter(e => e !== temp[checkInventoryIndex(remove[i].id)])
-					}
-				}
-		}
 			//add the new items to inventory
 			//for each item to add
 			for(let j = 0; j < add.length; j++){
@@ -204,14 +190,25 @@ export const Provider = props => {
 					//add the item to the inventory
 					new_inventory.push(addObject)
 				}else{
-					console.log("add qty: ", add[j].quantity);
-					let temp = [...new_inventory]
-					if(temp[checkInventoryIndex(add[j].id)]) {
-						temp[checkInventoryIndex(add[j].id)].quantity = temp[checkInventoryIndex(add[j].id)].quantity + add[j].quantity
-						new_inventory = temp;
-					}
+						new_inventory[checkInventoryIndex(add[j].id)].quantity = new_inventory[checkInventoryIndex(add[j].id)].quantity + add[j].quantity
 				}
 			}
+
+			//remove all the requirements
+			if(remove !== undefined){
+				for (let i = 0; i < remove.length; i++) {
+					//check if the decrementing the current quantity would result in a delete or decrement
+					if(checkInventory(remove[i].id) - remove[i].quantity !== 0){
+						//decrement the quantity of the item in inventory
+						new_inventory[checkInventoryIndex(remove[i].id)].quantity = new_inventory[checkInventoryIndex(remove[i].id)].quantity - remove[i].quantity
+					}else{
+						//delete the item in inventory
+						let temp1 = [...new_inventory]
+						new_inventory = temp1.filter(e => e !== temp1[checkInventoryIndex(remove[i].id)])
+					}
+				}
+		}
+
 			//update state to the new inventory
 			setInventory(new_inventory)
 		}
@@ -256,12 +253,9 @@ export const Provider = props => {
 
 		//get the current drop and quantity
 		let currentDrop = selectDrop(lootList)
-		//get the item requirement list to remove
-		console.log("current drop: ", currentDrop)
 
 		//get the action object from the id passed to doActivity
 		let actionObject = getObject(action, actions_json["actions"])
-		console.log("action object: ", actionObject)
 
 		//update inventory
 		updateInventory(currentDrop, actionObject.itemRequirements);
