@@ -1,9 +1,10 @@
-import React, { useState, useEffect, createContext } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect, createContext } from "react"
+import PropTypes from "prop-types"
 import locations_json from '../json/locations.json'
 import activities_json from '../json/activities.json'
 import items_json from '../json/items.json'
 import actions_json from '../json/actions.json'
+import loots_json from '../json/loots.json'
 
 export const Context = createContext({});
 
@@ -31,39 +32,69 @@ export const Provider = props => {
 		for(let i=0; i<locations_json["locations"].length; i++){
 			//add the location object at the current index to currentLocations
 			currentLocations.push(locations_json["locations"][i]);
+
 			//if the location object at the current index id is equal to the view id
 			if(locations_json["locations"][i].id === view){
+
 				//iterate through the activities of the current view location
 				for(let j=0; j<locations_json["locations"][i].activities.length; j++){
-					//iterate through the game activity objects
+
+					//iterate through the activity objects at the view location
 					for(let k=0; k<activities_json["activities"].length; k++){
-						//instantiate an array to hold the actions of each activity
-						let currentActivityActions = [];
+
 						//if the id of the activity of the current view location is equal to the id the game object activity
 						if(activities_json["activities"][k].id === locations_json["locations"][i].activities[j]){
+
+							//instantiate an array to hold the actions of each activity
+							let currentActivityActions = [];
+
 							//add the activity to the list of location activities
 							currentLocationActivities.push(activities_json["activities"][k]);
+
 							//iterate through the the activity actions
 							for(let l=0; l<activities_json["activities"][k].actions.length; l++){
+
 								//iterate through the actions
 								for(let m=0; m<actions_json["actions"].length; m++){
 									//if the activity action id and the action id are equal
 									if(actions_json["actions"][m].id === activities_json["activities"][k].actions[l]){
-										//add the action object to current activity actions array
-										currentActivityActions.push(actions_json["actions"][m]);
-									}
-								}
+
+										if(actions_json["actions"][m].itemRequirements !== undefined){
+											//check if the item requirements are met
+											if(checkInventoryRequirements(actions_json["actions"][m].itemRequirements)){
+												//currentActivityActions.push(actions_json["actions"][m]);
+											}
+											currentActivityActions.push(actions_json["actions"][m]);
+
+										}else{
+											console.log("undefined");
+											//add the action
+											//currentActivityActions.push(actions_json["actions"][m]);
+										}
+
+									}//ends if activity and action equal ids
+
+
+
+								}//ends json action iteration
+
+
+
 							}
+
+							//add the current activity actions to currentLocationActions
+							if(currentActivityActions.length !== 0){
+								currentLocationActions.push(currentActivityActions);
+							}
+
 						}
 
-						//add the current activity actions to currentLocationActions
-						if(currentActivityActions.length !== 0){
-							currentLocationActions.push(currentActivityActions);
-						}
+
+
 
 					}
 				}
-			}
+			}//equal view id
 		}
 
 		//if the list of locations is not 0
@@ -80,7 +111,6 @@ export const Provider = props => {
 
 		//if the list of current location actions is not 0
 		if(currentLocationActions.length !== 0){
-			console.log("did it work?", currentLocationActions);
 			setLocationActions(currentLocationActions);
 		}
 
@@ -106,6 +136,7 @@ export const Provider = props => {
 		}
 	}
 
+	//takes a list of item ids and quantities and returns true if found in inventory
 	const checkInventoryRequirements = (list) => {
 		//for each element in the list of item requirements
 		for (let i = 0; i < list.length; i++) {
@@ -139,28 +170,14 @@ export const Provider = props => {
 		}
 	}
 
-	//takes the id of an activity (integer)
-	const doActivity = (activity) => {
-
-		console.log("activity id: ", activity);
-
-		/*
-
+	//takes the id of an activity and action
+	const doActivity = (activity, action) => {
 		//methods and functions
 		//selectDrop: selects a item to drop from weighted probabilities
-		const selectDrop = (itemList) => {
-			let loot = null;
-			for (var key in activities_json) {
-				if (activities_json.hasOwnProperty(key)) {
-					if(activities_json[key].id === parseInt(activity)){
-						loot = activities_json[key].drop;
-					}
-				}
-			}
+		const selectDrop = (loot) => {
 			let weightSum = loot.reduce((a, b) => a + (b['weight'] || 0), 0);
 			let random = Math.floor(Math.random() * (weightSum - 0 + 1) + 0);
 			let weight = 0;
-
 			for(let i = 0; i < loot.length; i++) {
 				weight += loot[i].weight;
 				if(random <= weight){
@@ -177,8 +194,10 @@ export const Provider = props => {
 
 		//updateInventory
 		const updateInventory = (add, remove) => {
+
 			//instantiate copy of current inventory
 			let new_inventory =  [...inventory];
+			/*
 			//remove all the requirements
 			if(remove !== undefined){
 				for (let i = 0; i < remove.length; i++) {
@@ -192,14 +211,14 @@ export const Provider = props => {
 						new_inventory = temp.filter(e => e !== temp[checkInventoryIndex(remove[i].id)])
 					}
 				}
+		}*/
 			//add the new items to inventory
-		}
 			//for each item to add
 			for(let j = 0; j < add.length; j++){
 				//if the item to be collected does not exist in inventory
 				if(checkInventoryIndex(add[j].id) === -1){
 					//get the item object
-					let addObject = getObject(add[j].id, items_json);
+					let addObject = getObject(add[j].id, items_json["items"]);
 					addObject.quantity = add[j].quantity;
 					//add the item to the inventory
 					new_inventory.push(addObject);
@@ -229,43 +248,36 @@ export const Provider = props => {
 					let newStat = { name: dropObject.experienceType, experience: dropObject.experience, level: 1 }
 					setStats(stats.concat(newStat))
 				}
-
-			}
-
-
-		}
-
-		//doActivity:
-
-		//get the type of the Activity
-		let activityType = activities_json[activity].type;
-
-		//if the activity type is Collect
-		if(activityType === "Collect"){
-
-			let currentDrop = selectDrop(activities_json[activity].drop)
-			updateStats(currentDrop)
-			//setMessages([...messages, `You ${activityType.toLowerCase()} a ${currentDrop.name} and gain ${currentDrop.experience} ${currentDrop.experienceType} experience.`])
-			updateInventory(currentDrop)
-
-		//if the activity type is Refine
-		}else if (activityType === 'Refine') {
-			//check that the item requirements are in inventory
-			let itemRequirements = activities_json[activity].itemRequirements
-			let itemOutputs = activities_json[activity].drop;
-			let check = checkInventoryRequirements(itemRequirements)
-
-			if(check){
-
-
-				//setMessages([...messages, `You ${activityType.toLowerCase()} ${string} gained ${itemOutputs.experience} ${itemOutputs.experienceType} experience.`])
-				updateStats(itemOutputs)
-				updateInventory(itemOutputs, itemRequirements)
 			}
 		}
 
+		let lootList = null;
 
-		*/
+		//get the loot list object of the activity and objects
+		for(let i=0; i<loots_json["loots"].length; i++){
+			//get the activity and action id of each loop
+			let activityId = loots_json["loots"][i].activityId;
+			let actionId = loots_json["loots"][i].actionId;
+
+			//if the activity and action ids passed from click are equal to the respective loots foreign keys
+			if(activityId === activity && actionId === action){
+				//get the loot list objects
+			  lootList = loots_json["loots"][i].loot;
+			}
+		}
+
+		//get the current drop and quantity
+		let currentDrop = selectDrop(lootList)
+		//get the item requirement list to remove
+		console.log("current drop: ", currentDrop);
+
+		//get the action object from the id passed to doActivity
+		let actionObject = getObject(action, actions_json["actions"]);
+		console.log("action object: ", actionObject);
+
+		//update inventory
+		updateInventory(currentDrop);
+
 	};
 
 	const playerContext = {

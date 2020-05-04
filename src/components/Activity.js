@@ -28,15 +28,13 @@ const button_styles = {
 }
 
 const Activity = (props) => {
-	const playerContext = useContext(PlayerContext);
 
-	const { doActivity, locationActions } = playerContext;
+	const playerContext = useContext(PlayerContext);
+	const {doActivity} = playerContext;
 
 	const handleActivity = e => {
-		doActivity(e.target.id)
+		doActivity(props.id, e.target.id)
 	}
-	console.log(props.id);
-	console.log("activity actions: ", props.actions);
 
 	return <div style={container_styles}>
 
@@ -57,9 +55,14 @@ const Activity = (props) => {
 		<div style={{display: 'flex', width: '100%', justifyContent: 'space-evenly'}}>
 
 			{/* Buttons */}
+			{props.actions !== undefined ?
 
-			{props.actions.map((e, i) => <button id={e.id} onClick={handleActivity} style={button_styles}>{e.name}</button>)}
-			
+				props.actions.map((e, i) => <button id={e.id} key={e.id} onClick={handleActivity} style={button_styles}>{e.name}</button>)
+
+				: null
+
+			}
+
 		</div>
 	</div>
 };

@@ -1,144 +1,136 @@
 {
-    "1": {
-        "name": "Palm Logs",
-        "id": 1,
-        "source": "/imgs/woodlog.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Woodcutting",
-        "experience": 1,
-        "type": "Collect"
+    "items" :
+	[
+    {
+        "id":"af5f19ca-147b-4209-b394-c288872b1c31",
+        "name":"Palm Log",
+		    "source": "/imgs/items/palmlog.svg",
+        "quantity": 1
     },
-    "2": {
-        "name": "Minnow",
-        "id": 2,
-        "source": "/imgs/fish.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Gathering",
-        "experience": 1,
-        "type": "Collect"
+	  {
+        "id":"fd8d65ee-bf47-47f5-87f8-f14b12213694",
+        "name":"Minnow",
+		    "source": "/imgs/items/minnow.svg",
+        "quantity": 1
     },
-    "3": {
-        "name": "Cooked Minnow",
-        "id": 3,
-        "source": "/imgs/fishing.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Cooking",
-        "experience": 1,
-        "type": "Cook",
-        "requirement": "Minnows"
+	  {
+        "id":"8d867e28-0244-41bf-8ca9-a7986bd7b960",
+        "name":"Cooked Minnow",
+		    "source": "/imgs/items/cookedminnow.svg",
+        "quantity": 1
     },
-    "4": {
-        "name": "Palm Plank",
-        "id": 4,
-        "source": "/imgs/amount.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Woodworking",
-        "experience": 1,
-        "type": "Refine",
-        "requirement": "Palm Logs"
+	  {
+        "id":"635cd74e-886e-40e2-baf3-f51cc784c1e2",
+        "name":"Palm Plank",
+		    "source": "/imgs/items/palmplank.svg",
+        "quantity": 1
     },
-    "5": {
-        "name": "Coconut",
-        "id": 5,
-        "source": "/imgs/coconut.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Gathering",
-        "experience": 1,
-        "type": "Collect"
+    {
+        "id":"c2da151e-296a-4f51-9dc1-093fc5aba51e",
+        "name":"Cooked Egg",
+		    "source": "/imgs/items/cookedegg.svg",
+        "quantity": 1
     },
-    "6": {
-        "name": "Branch",
-        "id": 6,
-        "source": "/imgs/branch.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Gathering",
-        "experience": 1,
-        "type": "Collect"
+    {
+        "id":"167819a8-7f48-4a00-87cc-2b77d7bdc87f",
+        "name":"Palm Branch",
+		    "source": "/imgs/items/palmbranch.svg",
+        "quantity": 1
     },
-    "7": {
-        "name": "Rock",
-        "id": 7,
-        "source": "/imgs/rock.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Gathering",
-        "experience": 1,
-        "type": "Collect"
+    {
+        "id":"ad321a53-075b-4dbe-9d65-9c950e5bd5eb",
+        "name":"Stone",
+		    "source": "/imgs/items/stone.svg",
+        "quantity": 1
     },
-    "8": {
-        "name": "Shell",
-        "id": 8,
-        "source": "/imgs/shell.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Gathering",
-        "experience": 1,
-        "type": "Collect"
+    {
+        "id":"ec53ad53-b3dc-45af-a14c-e06fd4414180",
+        "name":"Shell",
+		    "source": "/imgs/items/shell.svg",
+        "quantity": 1
     },
-    "9": {
-        "name": "Key",
-        "id": 9,
-        "source": "/imgs/key.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Treasure Finding",
-        "experience": 1,
-        "type": "Collect"
+    {
+        "id":"2b5a67a2-af89-494b-8317-c63dec716733",
+        "name":"Fishing Hook",
+		    "source": "/imgs/items/fishinghook.svg",
+        "quantity": 1
     },
-    "10": {
-        "name": "Egg",
-        "id": 10,
-        "source": "/imgs/egg.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Gathering",
-        "experience": 1,
-        "type": "Collect"
+    {
+        "id":"d3ac0e97-3d27-4ac4-b426-792f41c0370c",
+        "name":"Egg",
+		    "source": "/imgs/items/egg.svg",
+        "quantity": 1
     },
-    "11": {
-        "name": "Flint",
-        "id": 11,
-        "source": "/imgs/flint.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Gathering",
-        "experience": 1,
-        "type": "Collect"
+    {
+        "id":"86362fea-cefc-4b60-8470-8621511e5991",
+        "name":"Palm Dowel",
+		    "source": "/imgs/items/palmdowel.svg",
+        "quantity": 1
     },
-    "12": {
-        "name": "Palm Leaf",
-        "id": 12,
-        "source": "/imgs/palmleaf.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Gathering",
-        "experience": 1,
-        "type": "Collect"
+    {
+        "id":"0df14141-2104-4f39-8a59-db791133e201",
+        "name":"Palm Leaf",
+		    "source": "/imgs/items/palmleaf.svg",
+        "quantity": 1
     },
-    "13": {
-        "name": "Coffee Branch",
-        "id": 13,
-        "source": "/imgs/coffeebranch.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Gathering",
-        "experience": 1,
-        "type": "Collect"
+    {
+        "id":"88f0899a-c25d-408a-b10e-a7d14a996046",
+        "name":"Coffee Branch",
+		    "source": "/imgs/items/coffeebranch.svg",
+        "quantity": 1
     },
-    "14": {
-        "name": "Coffee Beans",
-        "id": 14,
-        "source": "/imgs/coffeebeans.svg",
-        "stacks": true,
-        "quantity": 1,
-        "experienceType": "Grinding",
-        "experience": 1,
-        "type": "Refine"
+    {
+        "id":"8663fffc-5452-415f-a939-35385c66b83f",
+        "name":"Coffee Beans",
+		    "source": "/imgs/items/coffeebeans.svg",
+        "quantity": 1
+    },
+    {
+        "id":"a62528d9-bdc5-43da-bb7a-d4a9c81f9985",
+        "name":"Acorn",
+		    "source": "/imgs/items/acorn.svg",
+        "quantity": 1
+    },
+    {
+        "id":"afa15b8e-06f2-43d1-b3f5-25cea761a84e",
+        "name":"Hatchet",
+		    "source": "/imgs/items/hatchet.svg",
+        "quantity": 1
+    },
+    {
+        "id":"120f227e-291c-4246-97b6-e1b56147cf46",
+        "name":"Fishing Rod",
+		    "source": "/imgs/items/fishingrod.svg",
+        "quantity": 1
+    },
+    {
+        "id":"86604ac3-8719-4819-8617-6b5314b6c115",
+        "name":"Key",
+		    "source": "/imgs/items/key.svg",
+        "quantity": 1
+    },
+    {
+        "id":"819958f7-6280-4d88-a5a8-579e7b25e662",
+        "name":"Pinecone",
+		    "source": "/imgs/items/pinecone.svg",
+        "quantity": 1
+    },
+    {
+        "id":"243aaedf-6e5d-4598-b6fc-e777b6ce3584",
+        "name":"Fish 1",
+		    "source": "/imgs/items/fish1.svg",
+        "quantity": 1
+    },
+    {
+        "id":"d8a4a77d-6632-4e98-b730-a426fb1e0c96",
+        "name":"Fish 2",
+		    "source": "/imgs/items/fish2.svg",
+        "quantity": 1
+    },
+    {
+        "id":"ac35c6c0-bc7d-4005-b810-c44b0b5f0101",
+        "name":"Fish 3",
+		    "source": "/imgs/items/fish3.svg",
+        "quantity": 1
     }
-}
+	]}
