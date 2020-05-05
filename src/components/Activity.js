@@ -1,7 +1,7 @@
 import  React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../context";
 import ProgressBar from '../tools/ProgressBar'
-import actions_json from '../json/activities.json'
+import actions_json from '../json/actions.json'
 import items_json from '../json/items.json'
 
 const container_styles = {
