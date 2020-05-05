@@ -2,7 +2,7 @@ import  React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../context";
 import ProgressBar from '../tools/ProgressBar'
 import actions_json from '../json/actions.json'
-import items_json from '../json/items.json'
+import activities_json from '../json/activities.json'
 
 const container_styles = {
 	border: '1px solid #7D7D7D',
@@ -39,51 +39,41 @@ const Activity = (props) => {
 
 	const divisor = 2
 
-	useEffect(() => {
+	const timeSwitch = () => {
+		switch(true){
+			case(time < 100):
+				setTime(time + divisor)
+				doActivity(props.id, action)
+				break;
+			default:
+				setWork(false)
+				setAvailable(true)
+				setTime(0)
+		}
+	}
 
+	useEffect(() => {
 		//get the item requirements from the action object
 		let actionObject = getObject(action, actions_json["actions"]);
-
-
+		let activitiesObject = getObject(props.id, activities_json["activities"])
 		if(!available){
-
-				const interval = setInterval(() => {
-
-		//if the action has not item requirements
-		if(actionObject.itemRequirements){
-			//check the requirements
-			if(checkInventoryRequirements(actionObject.itemRequirements)) {
-				if(time < 100) {
-					setTime(time + divisor)
-					doActivity(props.id, action)
+			const interval = setInterval(() => {
+				if(activitiesObject.type === 'Collect') {
+					timeSwitch()
 				} else {
-					setWork(false)
-					setAvailable(true)
-					setTime(0)
+					if(actionObject.itemRequirements && checkInventoryRequirements(actionObject.itemRequirements)) {
+						timeSwitch()
+					} else {
+						setWork(false)
+						setAvailable(true)
+						setTime(0)
+					}
 				}
-			}
-		}else{
-				if(time < 100) {
-					setTime(time + divisor)
-					doActivity(props.id, action)
-				} else {
-					setWork(false)
-					setAvailable(true)
-					setTime(0)
-				}
+			}, 125);
+			return () => clearInterval(interval);
 		}
-
-
-
-
-
-				}, 1250);
-				return () => clearInterval(interval);
-		}
-
-
-
-    }, [time, work, props.id, doActivity, setWork, available, action, checkInventoryRequirements])
+	// eslint-disable-next-line
+    }, [time, work, props.id, doActivity, setWork, available, action, checkInventoryRequirements, getObject])
 
 	const startActivity = (e) => {
 		setAction(e.target.id)
