@@ -182,7 +182,7 @@ export const Provider = props => {
 		if(remove !== undefined){
 			for (let i = 0; i < remove.length; i++) {
 				//check if the decrementing the current quantity would result in a delete or decrement
-				if(checkInventory(remove[i].id) - remove[i].quantity !== 0){
+				if(checkInventory(remove[i].id) - remove[i].quantity !== 0 && new_inventory[checkInventoryIndex(remove[i].id)]){
 					//decrement the quantity of the item in inventory
 					new_inventory[checkInventoryIndex(remove[i].id)].quantity = new_inventory[checkInventoryIndex(remove[i].id)].quantity - remove[i].quantity
 				}else{
@@ -212,7 +212,7 @@ export const Provider = props => {
 	}
 
 	//takes the id of an activity and action
-	const doActivity = (activity, action) => {	
+	const doActivity = (activity, action) => {
 		let lootList = null
 		let activityId = null;
 		let actionId = null;
@@ -260,7 +260,8 @@ export const Provider = props => {
 		locations,
 		setLocations,
 		locationActions,
-		setLocationActions
+		setLocationActions,
+		getObject
 
 	}
 
