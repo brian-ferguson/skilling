@@ -180,27 +180,18 @@ export const Provider = props => {
 
 		//remove all the requirements
 		if(remove !== undefined){
-
 			for (let i = 0; i < remove.length; i++) {
-
-				//check if the item to be removed is disposable
-				if(remove[i].dispose){
-
-					//check if the decrementing the current quantity would result in a delete or decrement
-					if(checkInventory(remove[i].id) - remove[i].quantity !== 0){
-						//decrement the quantity of the item in inventory
-						new_inventory[checkInventoryIndex(remove[i].id)].quantity = new_inventory[checkInventoryIndex(remove[i].id)].quantity - remove[i].quantity
-					}else{
-						//delete the item in inventory
-						let temp1 = [...new_inventory]
-						new_inventory = temp1.filter(e => e !== temp1[checkInventoryIndex(remove[i].id)])
-					}
-
+				//check if the decrementing the current quantity would result in a delete or decrement
+				if(checkInventory(remove[i].id) - remove[i].quantity !== 0){
+					//decrement the quantity of the item in inventory
+					new_inventory[checkInventoryIndex(remove[i].id)].quantity = new_inventory[checkInventoryIndex(remove[i].id)].quantity - remove[i].quantity
+				}else{
+					//delete the item in inventory
+					let temp1 = [...new_inventory]
+					new_inventory = temp1.filter(e => e !== temp1[checkInventoryIndex(remove[i].id)])
 				}
 			}
 		}
-
-
 		//update state to the new inventory
 		setInventory(new_inventory)
 	}
@@ -248,7 +239,7 @@ export const Provider = props => {
 		let activityObject = getObject(activityId, activities_json["activities"])
 		//update inventory
 		updateInventory(currentDrop, actionObject.itemRequirements)
-		//update the stats
+		//update the set
 		updateStats(activityObject.type)
 	}
 
