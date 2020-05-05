@@ -32,7 +32,7 @@ const button_styles = {
 
 const Activity = (props) => {
 	const playerContext = useContext(PlayerContext);
-	const { doActivity, work, setWork, checkInventoryRequirements } = playerContext;
+	const { doActivity, work, setWork, checkInventoryRequirements, getObject } = playerContext;
 	const [time, setTime] = useState(0)
 	const [available, setAvailable] = useState(true)
 	const [action, setAction] = useState("")
@@ -40,21 +40,49 @@ const Activity = (props) => {
 	const divisor = 2
 
 	useEffect(() => {
-        if(!available){
-            const interval = setInterval(() => {
-				if(checkInventoryRequirements()) {
-					if(time < 100) {
-						setTime(time + divisor)
-						doActivity(props.id, action)
-					} else {
-						setWork(false)
-						setAvailable(true)
-						setTime(0)
-					}
+
+		//get the item requirements from the action object
+		let actionObject = getObject(action, actions_json["actions"]);
+
+
+		if(!available){
+
+				const interval = setInterval(() => {
+
+		//if the action has not item requirements
+		if(actionObject.itemRequirements){
+			//check the requirements
+			if(checkInventoryRequirements(actionObject.itemRequirements)) {
+				if(time < 100) {
+					setTime(time + divisor)
+					doActivity(props.id, action)
+				} else {
+					setWork(false)
+					setAvailable(true)
+					setTime(0)
 				}
-            }, 1250);
-            return () => clearInterval(interval);
-        }
+			}
+		}else{
+				if(time < 100) {
+					setTime(time + divisor)
+					doActivity(props.id, action)
+				} else {
+					setWork(false)
+					setAvailable(true)
+					setTime(0)
+				}
+		}
+
+
+
+
+
+				}, 1250);
+				return () => clearInterval(interval);
+		}
+
+
+
     }, [time, work, props.id, doActivity, setWork, available, action, checkInventoryRequirements])
 
 	const startActivity = (e) => {
@@ -95,9 +123,9 @@ const Activity = (props) => {
 		<div style={{display: 'flex', width: '100%', justifyContent: 'space-evenly'}}>
 
 			{/* Buttons */}
-			{!available 
+			{!available
 				? <button id={props.id} onClick={cancelActivity} style={{...button_styles, background: 'red'}}>Stop</button>
-				: props.actions !== undefined 
+				: props.actions !== undefined
 					? props.actions.map((e, i) => <button id={e.id} key={e.id} onClick={startActivity} style={button_styles}>{e.name}</button>)
 					: null
 			}

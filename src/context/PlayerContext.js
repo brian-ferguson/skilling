@@ -212,7 +212,7 @@ export const Provider = props => {
 	}
 
 	//takes the id of an activity and action
-	const doActivity = (activity, action) => {	
+	const doActivity = (activity, action) => {
 		let lootList = null
 		let activityId = null;
 		let actionId = null;
@@ -260,7 +260,8 @@ export const Provider = props => {
 		locations,
 		setLocations,
 		locationActions,
-		setLocationActions
+		setLocationActions,
+		getObject
 
 	}
 
