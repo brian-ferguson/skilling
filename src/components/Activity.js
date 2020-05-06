@@ -75,6 +75,8 @@ const Activity = (props) => {
 	// eslint-disable-next-line
     }, [time, work, props.id, doActivity, setWork, available, action, checkInventoryRequirements, getObject])
 
+
+	//activate the interval inside useEffect() by setting available to false
 	const startActivity = (e) => {
 		setAction(e.target.id)
         if(!work) {
@@ -106,7 +108,6 @@ const Activity = (props) => {
 			<p style={{margin: '25px 0 0 10px', fontSize: 18}}>{props.name}</p>
 		</div>
 
-		{/* <Line percent={time} strokeWidth="10" trailWidth="10" strokeColor={time === 100 ? 'green' : 'brown'} strokeLinecap="square" style={{margin: 5}} /> */}
 		<ProgressBar width={time} />
 
 		{/* Button Container */}
