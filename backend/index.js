@@ -12,8 +12,9 @@ app.use(cors());
 app.use(express.json())
 
 // Connection URL
+//mongodb+srv://admin:Cgu-q5@P3nZc9FUJ@cluster0-0pgmo.mongodb.net/test?retryWrites=true&w=majority
 let password = encodeURI(process.env.DB_PASSWORD)
-const url = 'mongodb+srv://admin:' + password + '@cluster0-0pgmo.mongodb.net/test?retryWrites=true&w=majority';
+const url = 'mongodb+srv://admin:' + password + '@cluster0-0pgmo.mongodb.net/game?retryWrites=true&w=majority';
 
 // Create a new MongoClient
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, () => console.log('Connected to database, ready for development.'.cyan))
