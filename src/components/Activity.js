@@ -30,7 +30,7 @@ const button_styles = {
 	cursor: 'pointer'
 }
 
-const Activity = (props) => {
+const Activity = ({ id, source, name, actions }) => {
 	const playerContext = useContext(PlayerContext);
 	const { doActivity, work, setWork, checkInventoryRequirements, getObject } = playerContext;
 	const [time, setTime] = useState(0)
@@ -39,45 +39,30 @@ const Activity = (props) => {
 
 	const divisor = 2
 
-	const timeSwitch = (actionType) => {
-
-		let finished = false;
-
+	const timeSwitch = () => {
 		switch(true){
-
 			case(time < 100):
 				setTime(time + divisor)
-				if(actionType === "Collect" || actionType === "Refine"){
-					doActivity(props.id, action)
-				}
-
+				doActivity(id, action)
 				break;
-
 			default:
-
 				setWork(false)
 				setAvailable(true)
 				setTime(0)
-				//if the action type is of type refine
-				if(actionType === "Craft"){
-					doActivity(props.id, action)
-				}
 		}
-
 	}
 
 	useEffect(() => {
 		//get the item requirements from the action object
 		let actionObject = getObject(action, actions_json["actions"]);
-		let activitiesObject = getObject(props.id, activities_json["activities"])
-
+		let activitiesObject = getObject(id, activities_json["activities"])
 		if(!available){
 			const interval = setInterval(() => {
-				if(actionObject.type === 'Collect') {
-					timeSwitch(actionObject.type)
+				if(activitiesObject.type === 'Collect') {
+					timeSwitch()
 				} else {
 					if(actionObject.itemRequirements && checkInventoryRequirements(actionObject.itemRequirements)) {
-						timeSwitch(actionObject.type)
+						timeSwitch()
 					} else {
 						setWork(false)
 						setAvailable(true)
@@ -87,33 +72,23 @@ const Activity = (props) => {
 			}, 125);
 			return () => clearInterval(interval);
 		}
-
 	// eslint-disable-next-line
-    }, [time, work, props.id, doActivity, setWork, available, action, checkInventoryRequirements, getObject])
+    }, [time, work, id, doActivity, setWork, available, action, checkInventoryRequirements, getObject])
 
-
-
-	//activate the interval inside useEffect() by setting available to false
 	const startActivity = (e) => {
-
 		setAction(e.target.id)
-
         if(!work) {
 			setAvailable(false)
 			setWork(true)
 			setTime(divisor)
-			//doActivity(props.id, e.target.id)
+			doActivity(id, e.target.id)
         }
-
-
     }
 
 	const cancelActivity = () => {
-
 		setAvailable(true)
 		setWork(false)
 		setTime(0)
-
 	}
 
 	return <div style={container_styles}>
@@ -122,15 +97,16 @@ const Activity = (props) => {
 		<div style={{display: 'flex', justifyContent: 'space-evenly'}}>
 			{/* Image */}
 			<img
-				src={process.env.PUBLIC_URL + props.source}
+				src={process.env.PUBLIC_URL + source}
 				alt=""
 				style={{ width: 50, height: 50, margin: '10px 0 0 10px' }}
 			/>
 
 			{/* Title */}
-			<p style={{margin: '25px 0 0 10px', fontSize: 18}}>{props.name}</p>
+			<p style={{margin: '25px 0 0 10px', fontSize: 18}}>{name}</p>
 		</div>
 
+		{/* <Line percent={time} strokeWidth="10" trailWidth="10" strokeColor={time === 100 ? 'green' : 'brown'} strokeLinecap="square" style={{margin: 5}} /> */}
 		<ProgressBar width={time} />
 
 		{/* Button Container */}
@@ -138,9 +114,9 @@ const Activity = (props) => {
 
 			{/* Buttons */}
 			{!available
-				? <button id={props.id} onClick={cancelActivity} style={{...button_styles, background: 'red'}}>Stop</button>
-				: props.actions !== undefined
-					? props.actions.map((e, i) => <button id={e.id} key={e.id} onClick={startActivity} style={button_styles}>{e.name}</button>)
+				? <button id={id} onClick={cancelActivity} style={{...button_styles, background: 'red'}}>Stop</button>
+				: actions !== undefined
+					? actions.map((e, i) => <button id={e.id} key={e.id} onClick={startActivity} style={button_styles}>{e.name}</button>)
 					: null
 			}
 		</div>
