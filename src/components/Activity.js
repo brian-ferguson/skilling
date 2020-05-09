@@ -43,7 +43,7 @@ const Activity = (props) => {
 		switch(true){
 			case(time < 100):
 				setTime(time + divisor)
-				doActivity(props.id, action)
+				doActivity(id, action)
 				break;
 			default:
 				setWork(false)
@@ -103,7 +103,7 @@ const Activity = (props) => {
 			/>
 
 			{/* Title */}
-			<p style={{margin: '25px 0 0 10px', fontSize: 18}}>{props.name}</p>
+			<p style={{margin: '25px 0 0 10px', fontSize: 18}}>{name}</p>
 		</div>
 
 		{/* <Line percent={time} strokeWidth="10" trailWidth="10" strokeColor={time === 100 ? 'green' : 'brown'} strokeLinecap="square" style={{margin: 5}} /> */}
@@ -114,9 +114,9 @@ const Activity = (props) => {
 
 			{/* Buttons */}
 			{!available
-				? <button id={props.id} onClick={cancelActivity} style={{...button_styles, background: 'red'}}>Stop</button>
-				: props.actions !== undefined
-					? props.actions.map((e, i) => <button id={e.id} key={e.id} onClick={startActivity} style={button_styles}>{e.name}</button>)
+				? <button id={id} onClick={cancelActivity} style={{...button_styles, background: 'red'}}>Stop</button>
+				: actions !== undefined
+					? actions.map((e, i) => <button id={e.id} key={e.id} onClick={startActivity} style={button_styles}>{e.name}</button>)
 					: null
 			}
 		</div>
