@@ -39,30 +39,45 @@ const Activity = (props) => {
 
 	const divisor = 2
 
-	const timeSwitch = () => {
+	const timeSwitch = (actionType) => {
+
+		let finished = false;
+
 		switch(true){
+
 			case(time < 100):
 				setTime(time + divisor)
-				doActivity(props.id, action)
+				if(actionType === "Collect" || actionType === "Refine"){
+					doActivity(props.id, action)
+				}
+
 				break;
+
 			default:
+
 				setWork(false)
 				setAvailable(true)
 				setTime(0)
+				//if the action type is of type refine
+				if(actionType === "Craft"){
+					doActivity(props.id, action)
+				}
 		}
+
 	}
 
 	useEffect(() => {
 		//get the item requirements from the action object
 		let actionObject = getObject(action, actions_json["actions"]);
 		let activitiesObject = getObject(props.id, activities_json["activities"])
+
 		if(!available){
 			const interval = setInterval(() => {
-				if(activitiesObject.type === 'Collect') {
-					timeSwitch()
+				if(actionObject.type === 'Collect') {
+					timeSwitch(actionObject.type)
 				} else {
 					if(actionObject.itemRequirements && checkInventoryRequirements(actionObject.itemRequirements)) {
-						timeSwitch()
+						timeSwitch(actionObject.type)
 					} else {
 						setWork(false)
 						setAvailable(true)
@@ -72,25 +87,33 @@ const Activity = (props) => {
 			}, 125);
 			return () => clearInterval(interval);
 		}
+
 	// eslint-disable-next-line
     }, [time, work, props.id, doActivity, setWork, available, action, checkInventoryRequirements, getObject])
 
 
+
 	//activate the interval inside useEffect() by setting available to false
 	const startActivity = (e) => {
+
 		setAction(e.target.id)
+
         if(!work) {
 			setAvailable(false)
 			setWork(true)
 			setTime(divisor)
-			doActivity(props.id, e.target.id)
+			//doActivity(props.id, e.target.id)
         }
+
+
     }
 
 	const cancelActivity = () => {
+
 		setAvailable(true)
 		setWork(false)
 		setTime(0)
+
 	}
 
 	return <div style={container_styles}>
