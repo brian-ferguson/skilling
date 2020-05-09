@@ -68,6 +68,7 @@ const View = () => {
 
 	const logout = () => {
 		setUser(null)
+		setQuery('')
 	}
 
 	const onChange = (e) => {
