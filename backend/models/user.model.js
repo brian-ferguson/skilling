@@ -7,9 +7,12 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    trim: true,
-    minlength: 3
+    trim: true
   },
+  inventory: {
+    type: Array,
+    required: false
+  }
 }, {
   timestamps: true,
 });

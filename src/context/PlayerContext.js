@@ -19,6 +19,7 @@ export const Provider = props => {
 	const [messages, setMessages] = useState([])
 	const [inventory, setInventory] = useState([])
 	const [stats, setStats] = useState([])
+	const [user, setUser] = useState(null)
 
 	// eslint-disable-next-line
 	useEffect(() => generateLocations(view), [view, inventory])
@@ -269,7 +270,9 @@ export const Provider = props => {
 		setLocations,
 		locationActions,
 		setLocationActions,
-		getObject
+		getObject,
+		user, 
+		setUser
 
 	}
 
