@@ -30,7 +30,7 @@ const button_styles = {
 	cursor: 'pointer'
 }
 
-const Activity = (props) => {
+const Activity = ({ id, source, name, actions }) => {
 	const playerContext = useContext(PlayerContext);
 	const { doActivity, work, setWork, checkInventoryRequirements, getObject } = playerContext;
 	const [time, setTime] = useState(0)
@@ -55,7 +55,7 @@ const Activity = (props) => {
 	useEffect(() => {
 		//get the item requirements from the action object
 		let actionObject = getObject(action, actions_json["actions"]);
-		let activitiesObject = getObject(props.id, activities_json["activities"])
+		let activitiesObject = getObject(id, activities_json["activities"])
 		if(!available){
 			const interval = setInterval(() => {
 				if(activitiesObject.type === 'Collect') {
@@ -73,7 +73,7 @@ const Activity = (props) => {
 			return () => clearInterval(interval);
 		}
 	// eslint-disable-next-line
-    }, [time, work, props.id, doActivity, setWork, available, action, checkInventoryRequirements, getObject])
+    }, [time, work, id, doActivity, setWork, available, action, checkInventoryRequirements, getObject])
 
 	const startActivity = (e) => {
 		setAction(e.target.id)
@@ -81,7 +81,7 @@ const Activity = (props) => {
 			setAvailable(false)
 			setWork(true)
 			setTime(divisor)
-			doActivity(props.id, e.target.id)
+			doActivity(id, e.target.id)
         }
     }
 
@@ -97,7 +97,7 @@ const Activity = (props) => {
 		<div style={{display: 'flex', justifyContent: 'space-evenly'}}>
 			{/* Image */}
 			<img
-				src={process.env.PUBLIC_URL + props.source}
+				src={process.env.PUBLIC_URL + source}
 				alt=""
 				style={{ width: 50, height: 50, margin: '10px 0 0 10px' }}
 			/>
