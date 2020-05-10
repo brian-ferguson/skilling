@@ -2,7 +2,6 @@ import  React, { useState, useEffect, useContext } from "react";
 import { PlayerContext } from "../context";
 import ProgressBar from '../tools/ProgressBar'
 import actions_json from '../json/actions.json'
-import activities_json from '../json/activities.json'
 
 const container_styles = {
 	border: '1px solid #7D7D7D',
@@ -30,7 +29,7 @@ const button_styles = {
 	cursor: 'pointer'
 }
 
-const Activity = (props) => {
+const Activity = ({ id, source, name, actions }) => {
 	const playerContext = useContext(PlayerContext);
 	const { doActivity, work, setWork, checkInventoryRequirements, getObject } = playerContext;
 	const [time, setTime] = useState(0)
@@ -45,7 +44,7 @@ const Activity = (props) => {
 
 		if(time === actionTime){
 			if(actionType === "Craft"){
-				doActivity(props.id, action)
+				doActivity(id, action)
 			}
 			
 			setWork(false)
@@ -54,7 +53,7 @@ const Activity = (props) => {
 		}else if(time % actionInterval === 0  && time !== 0){
 			//if the action type is of type collected
 			if(actionType === "Collect" || actionType === "Refine"){
-				doActivity(props.id, action)
+				doActivity(id, action)
 			}else if(actionType === "Fishing"){
 				//50% of the time return an item drop
 				let maximum = 1;
@@ -65,7 +64,7 @@ const Activity = (props) => {
 				//if a bite occurs
 				if(bite === 1){
 					console.log("bite");
-					doActivity(props.id, action);
+					doActivity(id, action);
 				}
 			}
 		}
@@ -75,17 +74,13 @@ const Activity = (props) => {
 				setTime(time + 1)
 				console.log("time: ", time);
 				if(actionType === "Collect" || actionType === "Refine"){
-					doActivity(props.id, action)
+					doActivity(id, action)
 				}
 				break;
 			default:
 				setWork(false)
 				setAvailable(true)
 				setTime(0)
-				//if the action type is of type refine
-				if(actionType === "Craft"){
-					doActivity(props.id, action)
-				}
 		}
 		*/
 	}
@@ -127,11 +122,8 @@ const Activity = (props) => {
 
 
 	// eslint-disable-next-line
-    }, [time, work, props.id, doActivity, setWork, available, action, checkInventoryRequirements, getObject])
+    }, [time, work, id, doActivity, setWork, available, action, checkInventoryRequirements, getObject])
 
-
-
-	//activate the interval inside useEffect() by setting available to false
 	const startActivity = (e) => {
 
 		//set the current action by id
@@ -170,13 +162,13 @@ const Activity = (props) => {
 		<div style={{display: 'flex', justifyContent: 'space-evenly'}}>
 			{/* Image */}
 			<img
-				src={process.env.PUBLIC_URL + props.source}
+				src={process.env.PUBLIC_URL + source}
 				alt=""
 				style={{ width: 50, height: 50, margin: '10px 0 0 10px' }}
 			/>
 
 			{/* Title */}
-			<p style={{margin: '25px 0 0 10px', fontSize: 18}}>{props.name}</p>
+			<p style={{margin: '25px 0 0 10px', fontSize: 18}}>{name}</p>
 		</div>
 
 		<ProgressBar width={(time / actionTime) * 100} />
@@ -186,9 +178,9 @@ const Activity = (props) => {
 
 			{/* Buttons */}
 			{!available
-				? <button id={props.id} onClick={cancelActivity} style={{...button_styles, background: 'red'}}>Stop</button>
-				: props.actions !== undefined
-					? props.actions.map((e, i) => <button id={e.id} key={e.id} onClick={startActivity} style={button_styles}>{e.name}</button>)
+				? <button id={id} onClick={cancelActivity} style={{...button_styles, background: 'red'}}>Stop</button>
+				: actions !== undefined
+					? actions.map((e, i) => <button id={e.id} key={e.id} onClick={startActivity} style={button_styles}>{e.name}</button>)
 					: null
 			}
 		</div>
