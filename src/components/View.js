@@ -6,6 +6,7 @@ import axios from 'axios'
 const activity_styles = {
 	display: 'flex',
 	flexDirection: 'row',
+	flexWrap: 'wrap',
 	flexGrow: 2
 }
 
@@ -57,11 +58,11 @@ const View = () => {
 		e.preventDefault()
 		axios.get('http://localhost:5000/users/')
 			.then(res => {
-				if (res.data.filter(e => e.username === query).length){
-					setUser(query)
+				if (res.data.filter(e => e.username.toLowerCase() === query.toLowerCase()).length){
+					setUser(query.toLowerCase())
 				} else {
-					axios.post('http://localhost:5000/users/add', {username: query})
-					setUser(query)
+					axios.post('http://localhost:5000/users/add', {username: query.toLowerCase()})
+					setUser(query.toLowerCase())
 				}
 			})
 	}

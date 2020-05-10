@@ -1,5 +1,6 @@
 import React, { useState, useEffect, createContext } from "react"
 import PropTypes from "prop-types"
+import axios from 'axios'
 import { levelFormula } from '../tools/index'
 import locations_json from '../json/locations.json'
 import activities_json from '../json/activities.json'
@@ -10,7 +11,6 @@ import loots_json from '../json/loots.json'
 export const Context = createContext({})
 
 export const Provider = props => {
-
 	const [locations, setLocations] = useState([])
 	const [locationActivities, setLocationActivities] = useState([])
 	const [locationActions, setLocationActions] = useState([])
@@ -20,6 +20,30 @@ export const Provider = props => {
 	const [inventory, setInventory] = useState([])
 	const [stats, setStats] = useState([])
 	const [user, setUser] = useState(null)
+	const [userID, setUserID] = useState(null)
+
+	//setUserID upon login
+	useEffect(() => {
+		if(user){
+			axios.get('http://localhost:5000/users/')
+			.then(res => res.data.filter(e => e.username === user))
+			.then(data => {
+				setUserID(data[0]._id)
+				setInventory(data[0].inventory)
+			})
+			.catch(err => console.log(err))
+
+		} else {
+			setInventory([])
+		}
+	// eslint-disable-next-line
+	}, [user])
+
+	//update user's inventory in database
+	useEffect(() => {
+		if (user) axios.post('http://localhost:5000/users/update/' + userID, { username: user, inventory: inventory})
+	// eslint-disable-next-line
+	}, [inventory])
 
 	// eslint-disable-next-line
 	useEffect(() => generateLocations(view), [view, inventory])

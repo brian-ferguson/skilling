@@ -13,7 +13,7 @@ const nav_styles = {
 const Menu = () => {
     const [menu, setMenu] = useState("Inventory")
 
-    return <div style={{borderLeft: '1px solid black'}}>
+    return <div style={{borderLeft: '1px solid black', minWidth: 200}}>
         {/* Menu */}
     	<div style={{display: 'flex'}}>
             <div id={"Inventory"} onClick={(e) => setMenu(e.target.id)} style={{...nav_styles, background: menu === "Inventory" ? 'Gainsboro' : '#F2F2F2'}}>Inventory</div>
