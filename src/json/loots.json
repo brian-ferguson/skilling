@@ -48,7 +48,7 @@
 			"loot": [
 				{
 					"id": "ec53ad53-b3dc-45af-a14c-e06fd4414180",
-					"weight": 50,
+					"weight": 30,
 					"minimum": 1,
 					"maximum": 5
 				},
@@ -60,13 +60,13 @@
 				},
 				{
 					"id": "ad321a53-075b-4dbe-9d65-9c950e5bd5eb",
-					"weight": 5,
+					"weight": 20,
 					"minimum": 1,
 					"maximum": 5
 				},
 				{
 					"id": "2b5a67a2-af89-494b-8317-c63dec716733",
-					"weight": 1,
+					"weight": 10,
 					"minimum": 1,
 					"maximum": 1
 				}

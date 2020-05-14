@@ -3,7 +3,7 @@ import React from 'react'
 const container_styles = {
     height: 20,
     width: '100%',
-    background: '#888', 
+    background: '#888',
     marginTop: 10
 }
 
