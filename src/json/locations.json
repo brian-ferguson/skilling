@@ -5,6 +5,16 @@
 			"name": "Calm Beach",
 			"source": "/imgs/locations/calmbeach.svg",
 			"type": "Collect",
+			"itemRequirements": [
+				"af5f19ca-147b-4209-b394-c288872b1c31",
+				"fd8d65ee-bf47-47f5-87f8-f14b12213694"
+			],
+			"statRequirements": [
+				{
+					"skillName": "woodcutting",
+					"levelRequirement": 5
+				}
+			],
 			"activities": [
 				"e929ec62-1222-4c0a-a174-2109ab7bade3",
 				"e18adbc6-91cb-4c47-b59e-cddc6092829b",

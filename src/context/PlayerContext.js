@@ -26,7 +26,7 @@ export const Provider = props => {
 	useEffect(() => {
 		if(user){
 			axios.get('http://localhost:5000/users/')
-			.then(res => res.data.filter(e => e.username === user))
+			.then(res => res.data.filter(e => e.username === user.username))
 			.then(data => {
 				setUserID(data[0]._id)
 				setInventory(data[0].inventory)

@@ -168,7 +168,7 @@ const Game = ({ logout }) => {
 	return <div style={{flexGrow: 2, background: '#C0FFEE', display: 'flex', flexDirection: 'column'}}>
 		{/* Titan Panel */}
 		<div style={titan_panel_styles}>
-			<p style={{color: '#FFF'}}>Welcome {user}</p>
+			<p style={{color: '#FFF'}}>Welcome {user.username}</p>
 			<button onClick={logout} style={button_styles}>logout</button>
 		</div>
 
@@ -198,10 +198,10 @@ const View = () => {
 		axios.get('http://localhost:5000/users/')
 			.then(res => {
 				if (res.data.filter(e => e.username.toLowerCase() === query.toLowerCase()).length){
-					setUser(query.toLowerCase())
+					setUser(res.data[res.data.map(i => i.username).indexOf(query.toLowerCase())])
 				} else {
 					axios.post('http://localhost:5000/users/add', {username: query.toLowerCase()})
-					setUser(query.toLowerCase())
+					setUser(res.data[res.data.map(i => i.username).indexOf(query.toLowerCase())])
 				}
 			})
 	}
